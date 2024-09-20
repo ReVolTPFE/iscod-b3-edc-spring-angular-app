@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  db:
+    image: mariadb:11.4.2
+    container_name: 'edc-db-mariadb'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./db/.database:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin:5.2.1-apache
+    container_name: 'edc-db-interface-phpmyadmin'
+    depends_on:
+      - db
+    ports:
+      - "8000:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+  backend-spring:
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    container_name: 'edc-backend-spring'
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/src:/app/src
+  frontend-angular:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    container_name: 'edc-frontend-angular'
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend-spring
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/package.json:/app/package.json
+      - ./frontend/package-lock.json:/app/package-lock.json
