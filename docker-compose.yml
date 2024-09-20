@@ -25,6 +25,8 @@ services:
     container_name: 'edc-backend-spring'
     ports:
       - "8080:8080"
+    depends_on:
+      - maildev
     volumes:
       - ./backend/src:/app/src
   frontend-angular:
@@ -40,3 +42,9 @@ services:
       - ./frontend/src:/app/src
       - ./frontend/package.json:/app/package.json
       - ./frontend/package-lock.json:/app/package-lock.json
+  maildev:
+    image: maildev/maildev:1.1.0
+    container_name: 'edc-maildev'
+    ports:
+      - "8081:80"
+      - "25:25"
