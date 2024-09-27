@@ -18,4 +18,10 @@ public class ProjectController
     public void login(@RequestBody Project project, @PathVariable("userId") int userId) {
         projectService.create(project, userId);
     }
+
+    @PostMapping("/{projectId}/addUser")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public void login(@RequestBody String email, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId) {
+        projectService.addUser(projectId, userId, email);
+    }
 }
