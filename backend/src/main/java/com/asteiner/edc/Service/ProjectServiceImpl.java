@@ -10,6 +10,7 @@ import com.asteiner.edc.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -43,7 +44,10 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
 
         //if the user isn't in the project, we don't allow him to do anything
-        userProjectRoleRepository.findByUserAndProject(user, project).orElseThrow(() -> new NotFoundException("This user isn't in this project"));
+        UserProjectRole userProjectRole = userProjectRoleRepository.findByUserAndProject(user, project).orElseThrow(() -> new NotFoundException("This user isn't in this project"));
+
+        //if the user isn't admin, he can't add another one
+        if (!Objects.equals(userProjectRole.getRole(), "ADMIN")) throw new IllegalStateException("User is not admin in project");
 
         User newUser = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("No user was found with this email"));
 
