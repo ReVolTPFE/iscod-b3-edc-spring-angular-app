@@ -32,6 +32,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private TaskHistoryRepository taskHistoryRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
     public void create(Project project, int userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
@@ -102,6 +105,8 @@ public class ProjectServiceImpl implements ProjectService {
         taskHistory.setStatus(taskDtoObject.getStatus());
         taskHistory.setDueDate(taskDtoObject.getDueDate());
         taskHistoryRepository.save(taskHistory);
+
+        emailService.sendEmail(user.getEmail(), "New task assigned", "You were assigned to a new task.");
     }
 
     @Override
@@ -119,6 +124,8 @@ public class ProjectServiceImpl implements ProjectService {
         Task task = taskRepository.findById(taskId).orElseThrow(() -> new NotFoundException("Task not found"));
         task.addUser(userToAdd);
         taskRepository.save(task);
+
+        emailService.sendEmail(userToAdd.getEmail(), "New task assigned", "You were assigned to a new task.");
     }
 
     @Override
