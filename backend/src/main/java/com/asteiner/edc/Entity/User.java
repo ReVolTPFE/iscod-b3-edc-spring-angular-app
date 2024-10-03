@@ -2,6 +2,7 @@ package com.asteiner.edc.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "user")
@@ -30,7 +31,7 @@ public class User
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "task_id")
     )
-    private Set<Task> tasks;
+    private Set<Task> tasks = new HashSet<>();
 
     public int getId() {
         return id;
@@ -74,5 +75,20 @@ public class User
 
     public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public void addTask(Task task) {
+        if (tasks == null) {
+            tasks = new HashSet<>();
+        }
+        tasks.add(task);
+        task.getUsers().add(this);
+    }
+
+    public void removeTask(Task task) {
+        if (tasks != null) {
+            tasks.remove(task);
+            task.getUsers().remove(this);
+        }
     }
 }

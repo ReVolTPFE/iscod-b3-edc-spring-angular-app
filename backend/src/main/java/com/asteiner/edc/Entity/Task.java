@@ -2,6 +2,7 @@ package com.asteiner.edc.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "task")
@@ -20,7 +21,7 @@ public class Task
     private Set<TaskHistory> taskHistories;
 
     @ManyToMany(mappedBy = "tasks")
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
 
     public int getId() {
         return id;
@@ -48,5 +49,20 @@ public class Task
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public void addUser(User user) {
+        if (users == null) {
+            users = new HashSet<>();
+        }
+        users.add(user);
+        user.getTasks().add(this);
+    }
+
+    public void removeUser(User user) {
+        if (users != null) {
+            users.remove(user);
+            user.getTasks().remove(this);
+        }
     }
 }

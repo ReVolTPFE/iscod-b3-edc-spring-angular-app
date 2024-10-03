@@ -1,6 +1,7 @@
 package com.asteiner.edc.Controller;
 
 import com.asteiner.edc.Entity.Project;
+import com.asteiner.edc.Others.TaskDtoObject;
 import com.asteiner.edc.Service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,12 @@ public class ProjectController
     @ResponseStatus(code = HttpStatus.CREATED)
     public void createProject(@RequestBody Project project, @PathVariable("userId") int userId) {
         projectService.create(project, userId);
+    }
+
+    @PostMapping("/{projectId}/task/create")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public void createTask(@RequestBody TaskDtoObject taskDtoObject, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId) {
+        projectService.createTask(userId, projectId, taskDtoObject);
     }
 
     @PostMapping("/{projectId}/addUser")

@@ -1,17 +1,15 @@
 package com.asteiner.edc.Service;
 
-import com.asteiner.edc.Entity.Project;
-import com.asteiner.edc.Entity.User;
-import com.asteiner.edc.Entity.UserProjectRole;
+import com.asteiner.edc.Entity.*;
 import com.asteiner.edc.Exception.NotFoundException;
-import com.asteiner.edc.Repository.ProjectRepository;
-import com.asteiner.edc.Repository.UserProjectRoleRepository;
-import com.asteiner.edc.Repository.UserRepository;
+import com.asteiner.edc.Others.TaskDtoObject;
+import com.asteiner.edc.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -23,6 +21,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     private UserProjectRoleRepository userProjectRoleRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
+    private TaskHistoryRepository taskHistoryRepository;
 
     @Override
     public void create(Project project, int userId) {
@@ -74,6 +78,28 @@ public class ProjectServiceImpl implements ProjectService {
         userProjectRoleRepository.save(userToChangeRoleProjectRole);
     }
 
+    @Override
+    public void createTask(int userId, int projectId, TaskDtoObject taskDtoObject) {
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+
+        checkUserInProject(user, project);
+
+        Task task = new Task();
+        task.setProject(project);
+        task.addUser(user);
+        taskRepository.save(task);
+
+        TaskHistory taskHistory = new TaskHistory();
+        taskHistory.setTask(task);
+        taskHistory.setName(taskDtoObject.getName());
+        taskHistory.setDescription(taskDtoObject.getDescription());
+        taskHistory.setPriority(taskDtoObject.getPriority());
+        taskHistory.setStatus(taskDtoObject.getStatus());
+        taskHistory.setDueDate(taskDtoObject.getDueDate());
+        taskHistoryRepository.save(taskHistory);
+    }
+
     private void checkUserAdminInProject(int userId, Project project) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
 
@@ -82,5 +108,10 @@ public class ProjectServiceImpl implements ProjectService {
 
         //if the user isn't admin, he can't do something else
         if (!Objects.equals(userProjectRole.getRole(), "ADMIN")) throw new IllegalStateException("User is not admin in project");
+    }
+
+    private void checkUserInProject(User user, Project project) {
+        //if the user isn't in the project, we don't allow him to do anything
+        UserProjectRole userProjectRole = userProjectRoleRepository.findByUserAndProject(user, project).orElseThrow(() -> new NotFoundException("This user isn't in this project"));
     }
 }
