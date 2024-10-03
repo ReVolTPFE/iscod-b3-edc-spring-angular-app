@@ -6,4 +6,6 @@ public interface ProjectService {
     void create(Project project, int userId);
 
     void addUser(int projectId, int userId, String email);
+
+    void changeUserRole(int projectId, int userId, int userToChangeRoleId, String newRole);
 }

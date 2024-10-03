@@ -40,14 +40,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void addUser(int projectId, int userId, String email) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
 
-        //if the user isn't in the project, we don't allow him to do anything
-        UserProjectRole userProjectRole = userProjectRoleRepository.findByUserAndProject(user, project).orElseThrow(() -> new NotFoundException("This user isn't in this project"));
-
-        //if the user isn't admin, he can't add another one
-        if (!Objects.equals(userProjectRole.getRole(), "ADMIN")) throw new IllegalStateException("User is not admin in project");
+        checkUserAdminInProject(userId, project);
 
         User newUser = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("No user was found with this email"));
 
@@ -64,5 +59,28 @@ public class ProjectServiceImpl implements ProjectService {
         newUserProjectRole.setRole("MEMBER");
 
         userProjectRoleRepository.save(newUserProjectRole);
+    }
+
+    @Override
+    public void changeUserRole(int projectId, int userId, int userToChangeRoleId, String newRole) {
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
+
+        checkUserAdminInProject(userId, project);
+
+        User userToChangeRole = userRepository.findById(userToChangeRoleId).orElseThrow(() -> new NotFoundException("User to change role not found"));
+        UserProjectRole userToChangeRoleProjectRole = userProjectRoleRepository.findByUserAndProject(userToChangeRole, project).orElseThrow(() -> new NotFoundException("User to change role isn't in this project"));
+
+        userToChangeRoleProjectRole.setRole(newRole);
+        userProjectRoleRepository.save(userToChangeRoleProjectRole);
+    }
+
+    private void checkUserAdminInProject(int userId, Project project) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+
+        //if the user isn't in the project, we don't allow him to do anything
+        UserProjectRole userProjectRole = userProjectRoleRepository.findByUserAndProject(user, project).orElseThrow(() -> new NotFoundException("This user isn't in this project"));
+
+        //if the user isn't admin, he can't do something else
+        if (!Objects.equals(userProjectRole.getRole(), "ADMIN")) throw new IllegalStateException("User is not admin in project");
     }
 }
