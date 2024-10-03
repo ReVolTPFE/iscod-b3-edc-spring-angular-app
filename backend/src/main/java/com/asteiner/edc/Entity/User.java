@@ -33,10 +33,6 @@ public class User
     )
     private Set<Task> tasks = new HashSet<>();
 
-    public int getId() {
-        return id;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -61,34 +57,7 @@ public class User
         this.password = password;
     }
 
-    public Set<UserProjectRole> getUserProjectRoles() {
-        return userProjectRoles;
-    }
-
-    public void setUserProjectRoles(Set<UserProjectRole> userProjectRoles) {
-        this.userProjectRoles = userProjectRoles;
-    }
-
     public Set<Task> getTasks() {
         return tasks;
-    }
-
-    public void setTasks(Set<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-    public void addTask(Task task) {
-        if (tasks == null) {
-            tasks = new HashSet<>();
-        }
-        tasks.add(task);
-        task.getUsers().add(this);
-    }
-
-    public void removeTask(Task task) {
-        if (tasks != null) {
-            tasks.remove(task);
-            task.getUsers().remove(this);
-        }
     }
 }

@@ -21,10 +21,6 @@ public class UserProjectRole
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    public int getId() {
-        return id;
-    }
-
     public String getRole() {
         return role;
     }

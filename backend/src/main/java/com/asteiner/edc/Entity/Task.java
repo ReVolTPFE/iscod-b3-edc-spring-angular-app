@@ -47,22 +47,11 @@ public class Task
         return users;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
     public void addUser(User user) {
         if (users == null) {
             users = new HashSet<>();
         }
         users.add(user);
         user.getTasks().add(this);
-    }
-
-    public void removeUser(User user) {
-        if (users != null) {
-            users.remove(user);
-            user.getTasks().remove(this);
-        }
     }
 }
