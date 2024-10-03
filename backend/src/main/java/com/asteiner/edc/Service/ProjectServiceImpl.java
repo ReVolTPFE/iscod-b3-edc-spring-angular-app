@@ -9,6 +9,7 @@ import com.asteiner.edc.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -203,6 +204,46 @@ public class ProjectServiceImpl implements ProjectService {
         taskDto.setTaskHistories(taskHistoryDtos);
 
         return taskDto;
+    }
+
+    @Override
+    public List<GetTaskDto> getTasksByStatus(int userId, int projectId, String status) {
+        //Check first if user making the request is in project
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+        checkUserInProject(user, project);
+
+        List<Task> tasks = taskRepository.findTasksByStatus(status);
+
+        List<GetTaskDto> tasksDto = new ArrayList<>();
+
+        for (Task task : tasks) {
+            GetTaskDto taskDto = new GetTaskDto();
+            taskDto.setId(task.getId());
+            taskDto.setProjectId(task.getProject().getId());
+
+            List<GetTaskHistoryDto> taskHistoryDtos = task.getTaskHistories().stream()
+                .map(history -> {
+                    GetTaskHistoryDto dto = new GetTaskHistoryDto();
+                    dto.setId(history.getId());
+                    dto.setName(history.getName());
+                    dto.setDescription(history.getDescription());
+                    dto.setPriority(history.getPriority());
+                    dto.setStatus(history.getStatus());
+                    dto.setDueDate(history.getDueDate());
+                    dto.setEndedAt(history.getEndedAt());
+                    dto.setTaskId(history.getTask().getId());
+                    return dto;
+                })
+                .collect(Collectors.toList())
+            ;
+
+            taskDto.setTaskHistories(taskHistoryDtos);
+
+            tasksDto.add(taskDto);
+        }
+
+        return tasksDto;
     }
 
     private void checkUserAdminInProject(int userId, Project project) {

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/user/{userId}/project")
 public class ProjectController
@@ -31,6 +33,12 @@ public class ProjectController
     @ResponseStatus(code = HttpStatus.CREATED)
     public void addUserToProject(@RequestBody String email, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId) {
         projectService.addUser(projectId, userId, email);
+    }
+
+    @GetMapping("/{projectId}/task/status/{status}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<GetTaskDto> getTasksByStatus(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @PathVariable("status") String status) {
+        return projectService.getTasksByStatus(userId, projectId, status);
     }
 
     @PostMapping("/{projectId}/task/{taskId}/addUser")

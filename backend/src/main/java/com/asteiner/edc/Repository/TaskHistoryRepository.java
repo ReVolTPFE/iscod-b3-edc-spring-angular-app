@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface TaskHistoryRepository extends CrudRepository<TaskHistory, Integer> {
-    @Query("SELECT th FROM TaskHistory th WHERE th.task.id = :taskId ORDER BY th.id DESC")
+    @Query("SELECT th FROM TaskHistory th WHERE th.task.id = :taskId ORDER BY th.id DESC LIMIT 1")
     TaskHistory findLatestTaskHistoryByTaskId(@Param("taskId") int taskId);
 }
