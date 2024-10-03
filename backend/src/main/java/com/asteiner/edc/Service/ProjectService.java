@@ -11,4 +11,6 @@ public interface ProjectService {
     void changeUserRole(int projectId, int userId, int userToChangeRoleId, String newRole);
 
     void createTask(int userId, int projectId, TaskDtoObject taskDtoObject);
+
+    void addUserOnTask(int userId, int projectId, int taskId, int userToAddId);
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -100,6 +99,23 @@ public class ProjectServiceImpl implements ProjectService {
         taskHistoryRepository.save(taskHistory);
     }
 
+    @Override
+    public void addUserOnTask(int userId, int projectId, int taskId, int userToAddId) {
+        //Check first if user making the request is in project
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+        checkUserInProject(user, project);
+
+        //Then check if user to add is in project
+        User userToAdd = userRepository.findById(userToAddId).orElseThrow(() -> new NotFoundException("User to add not found"));
+        checkUserInProject(userToAdd, project);
+
+        //Then add user to task
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new NotFoundException("Task not found"));
+        task.addUser(userToAdd);
+        taskRepository.save(task);
+    }
+
     private void checkUserAdminInProject(int userId, Project project) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
 
@@ -112,6 +128,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     private void checkUserInProject(User user, Project project) {
         //if the user isn't in the project, we don't allow him to do anything
-        UserProjectRole userProjectRole = userProjectRoleRepository.findByUserAndProject(user, project).orElseThrow(() -> new NotFoundException("This user isn't in this project"));
+        userProjectRoleRepository.findByUserAndProject(user, project).orElseThrow(() -> new NotFoundException("This user isn't in this project"));
     }
 }

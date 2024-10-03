@@ -32,6 +32,12 @@ public class ProjectController
         projectService.addUser(projectId, userId, email);
     }
 
+    @PostMapping("/{projectId}/task/{taskId}/addUser")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public void addUserToTask(@RequestBody String userToAddId, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @PathVariable("taskId") int taskId) {
+        projectService.addUserOnTask(userId, projectId, taskId, Integer.parseInt(userToAddId));
+    }
+
     @PutMapping("/{projectId}/changeUserRole/{userToChangeRoleId}")
     @ResponseStatus(code = HttpStatus.OK)
     public void changeUserRoleInProject(@RequestBody String newRole, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @PathVariable("userToChangeRoleId") int userToChangeRoleId) {
