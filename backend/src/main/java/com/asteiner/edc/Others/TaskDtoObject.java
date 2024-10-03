@@ -8,6 +8,7 @@ public class TaskDtoObject {
     private String status;
     private String priority;
     private LocalDate dueDate;
+    private LocalDate endedAt;
 
     public String getName() {
         return name;
@@ -47,5 +48,13 @@ public class TaskDtoObject {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public LocalDate getEndedAt() {
+        return endedAt;
+    }
+
+    public void setEndedAt(LocalDate endedAt) {
+        this.endedAt = endedAt;
     }
 }

@@ -38,6 +38,12 @@ public class ProjectController
         projectService.addUserOnTask(userId, projectId, taskId, Integer.parseInt(userToAddId));
     }
 
+    @PatchMapping("/{projectId}/task/{taskId}/edit")
+    @ResponseStatus(code = HttpStatus.OK)
+    public void editTask(@RequestBody TaskDtoObject taskDtoObject, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @PathVariable("taskId") int taskId) {
+        projectService.editTask(userId, projectId, taskId, taskDtoObject);
+    }
+
     @PutMapping("/{projectId}/changeUserRole/{userToChangeRoleId}")
     @ResponseStatus(code = HttpStatus.OK)
     public void changeUserRoleInProject(@RequestBody String newRole, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @PathVariable("userToChangeRoleId") int userToChangeRoleId) {

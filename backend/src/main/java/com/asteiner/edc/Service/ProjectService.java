@@ -13,4 +13,6 @@ public interface ProjectService {
     void createTask(int userId, int projectId, TaskDtoObject taskDtoObject);
 
     void addUserOnTask(int userId, int projectId, int taskId, int userToAddId);
+
+    void editTask(int userId, int projectId, int taskId, TaskDtoObject taskDtoObject);
 }

@@ -116,6 +116,57 @@ public class ProjectServiceImpl implements ProjectService {
         taskRepository.save(task);
     }
 
+    @Override
+    public void editTask(int userId, int projectId, int taskId, TaskDtoObject taskDtoObject) {
+        //Check first if user making the request is in project
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+        checkUserInProject(user, project);
+
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new NotFoundException("Task not found"));
+        TaskHistory latestTaskHistory = taskHistoryRepository.findLatestTaskHistoryByTaskId(task.getId());
+        TaskHistory taskHistory = new TaskHistory();
+        taskHistory.setTask(task);
+
+        if (taskDtoObject.getName() != null) {
+            taskHistory.setName(taskDtoObject.getName());
+        } else {
+            taskHistory.setName(latestTaskHistory.getName());
+        }
+
+        if (taskDtoObject.getDescription() != null) {
+            taskHistory.setDescription(taskDtoObject.getDescription());
+        } else {
+            taskHistory.setDescription(latestTaskHistory.getDescription());
+        }
+
+        if (taskDtoObject.getStatus() != null) {
+            taskHistory.setStatus(taskDtoObject.getStatus());
+        } else {
+            taskHistory.setStatus(latestTaskHistory.getStatus());
+        }
+
+        if (taskDtoObject.getPriority() != null) {
+            taskHistory.setPriority(taskDtoObject.getPriority());
+        } else {
+            taskHistory.setPriority(latestTaskHistory.getPriority());
+        }
+
+        if (taskDtoObject.getDueDate() != null) {
+            taskHistory.setDueDate(taskDtoObject.getDueDate());
+        } else {
+            taskHistory.setDueDate(latestTaskHistory.getDueDate());
+        }
+
+        if (taskDtoObject.getEndedAt() != null) {
+            taskHistory.setEndedAt(taskDtoObject.getEndedAt());
+        } else {
+            taskHistory.setEndedAt(latestTaskHistory.getEndedAt());
+        }
+
+        taskHistoryRepository.save(taskHistory);
+    }
+
     private void checkUserAdminInProject(int userId, Project project) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
 
