@@ -90,7 +90,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
 
-        checkUserInProject(user, project);
+        checkUserMemberInProject(user, project);
 
         Task task = new Task();
         task.setProject(project);
@@ -114,7 +114,7 @@ public class ProjectServiceImpl implements ProjectService {
         //Check first if user making the request is in project
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
-        checkUserInProject(user, project);
+        checkUserMemberInProject(user, project);
 
         //Then check if user to add is in project
         User userToAdd = userRepository.findById(userToAddId).orElseThrow(() -> new NotFoundException("User to add not found"));
@@ -133,7 +133,7 @@ public class ProjectServiceImpl implements ProjectService {
         //Check first if user making the request is in project
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
-        checkUserInProject(user, project);
+        checkUserMemberInProject(user, project);
 
         Task task = taskRepository.findById(taskId).orElseThrow(() -> new NotFoundException("Task not found"));
         TaskHistory latestTaskHistory = taskHistoryRepository.findLatestTaskHistoryByTaskId(task.getId());
@@ -261,6 +261,19 @@ public class ProjectServiceImpl implements ProjectService {
 
         //if the user isn't admin, he can't do something else
         if (!Objects.equals(userProjectRole.getRole(), "ADMIN")) throw new IllegalStateException("User is not admin in project");
+    }
+
+    private void checkUserMemberInProject(User user, Project project) {
+        //if the user isn't in the project, we don't allow him to do anything
+        UserProjectRole userProjectRole = userProjectRoleRepository.findByUserAndProject(user, project).orElseThrow(() -> new NotFoundException("This user isn't in this project"));
+        //if the user isn't admin, he can't do something else
+        boolean invalidRole = true;
+
+        if (Objects.equals(userProjectRole.getRole(), "ADMIN") || Objects.equals(userProjectRole.getRole(), "MEMBER")) {
+            invalidRole = false;
+        }
+
+        if (invalidRole) throw new IllegalStateException("User is not admin or member in project");
     }
 
     private void checkUserInProject(User user, Project project) {
