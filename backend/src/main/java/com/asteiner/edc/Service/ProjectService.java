@@ -1,6 +1,7 @@
 package com.asteiner.edc.Service;
 
 import com.asteiner.edc.Entity.Project;
+import com.asteiner.edc.Others.GetTaskDto;
 import com.asteiner.edc.Others.TaskDtoObject;
 
 public interface ProjectService {
@@ -15,4 +16,6 @@ public interface ProjectService {
     void addUserOnTask(int userId, int projectId, int taskId, int userToAddId);
 
     void editTask(int userId, int projectId, int taskId, TaskDtoObject taskDtoObject);
+
+    GetTaskDto getTask(int userId, int projectId, int taskId);
 }

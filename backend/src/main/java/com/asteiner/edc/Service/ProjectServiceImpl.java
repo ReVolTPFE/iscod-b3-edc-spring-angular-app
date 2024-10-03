@@ -2,13 +2,17 @@ package com.asteiner.edc.Service;
 
 import com.asteiner.edc.Entity.*;
 import com.asteiner.edc.Exception.NotFoundException;
+import com.asteiner.edc.Others.GetTaskDto;
+import com.asteiner.edc.Others.GetTaskHistoryDto;
 import com.asteiner.edc.Others.TaskDtoObject;
 import com.asteiner.edc.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -165,6 +169,40 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         taskHistoryRepository.save(taskHistory);
+    }
+
+    @Override
+    public GetTaskDto getTask(int userId, int projectId, int taskId) {
+        //Check first if user making the request is in project
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+        checkUserInProject(user, project);
+
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new NotFoundException("Task not found"));
+
+        GetTaskDto taskDto = new GetTaskDto();
+        taskDto.setId(task.getId());
+        taskDto.setProjectId(task.getProject().getId());
+
+        List<GetTaskHistoryDto> taskHistoryDtos = task.getTaskHistories().stream()
+            .map(history -> {
+                GetTaskHistoryDto dto = new GetTaskHistoryDto();
+                dto.setId(history.getId());
+                dto.setName(history.getName());
+                dto.setDescription(history.getDescription());
+                dto.setPriority(history.getPriority());
+                dto.setStatus(history.getStatus());
+                dto.setDueDate(history.getDueDate());
+                dto.setEndedAt(history.getEndedAt());
+                dto.setTaskId(history.getTask().getId());
+                return dto;
+            })
+            .collect(Collectors.toList())
+        ;
+
+        taskDto.setTaskHistories(taskHistoryDtos);
+
+        return taskDto;
     }
 
     private void checkUserAdminInProject(int userId, Project project) {

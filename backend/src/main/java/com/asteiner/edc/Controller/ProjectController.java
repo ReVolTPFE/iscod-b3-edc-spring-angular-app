@@ -1,6 +1,7 @@
 package com.asteiner.edc.Controller;
 
 import com.asteiner.edc.Entity.Project;
+import com.asteiner.edc.Others.GetTaskDto;
 import com.asteiner.edc.Others.TaskDtoObject;
 import com.asteiner.edc.Service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,12 @@ public class ProjectController
     @ResponseStatus(code = HttpStatus.OK)
     public void editTask(@RequestBody TaskDtoObject taskDtoObject, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @PathVariable("taskId") int taskId) {
         projectService.editTask(userId, projectId, taskId, taskDtoObject);
+    }
+
+    @GetMapping("/{projectId}/task/{taskId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public GetTaskDto getTask(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @PathVariable("taskId") int taskId) {
+        return projectService.getTask(userId, projectId, taskId);
     }
 
     @PutMapping("/{projectId}/changeUserRole/{userToChangeRoleId}")
