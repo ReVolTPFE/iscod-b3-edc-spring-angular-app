@@ -5,8 +5,8 @@ WORKDIR /app
 # Copier les fichiers de configuration
 COPY package.json package-lock.json ./
 
-# Installer les dépendances et Angular CLI globalement
-RUN npm install && npm install -g @angular/cli
+# Installer les dépendances et Angular CLI globalement et nodemon globalement
+RUN npm install && npm install -g @angular/cli && npm install -g nodemon
 
 # Copier le reste du code source
 COPY . .
@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 4200
 
 # Lancer le serveur de développement Angular
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+CMD ["npx", "nodemon", "--watch", "src", "--exec", "ng serve --host 0.0.0.0 --poll 2000"]
