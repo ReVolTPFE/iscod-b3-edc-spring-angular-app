@@ -1,6 +1,7 @@
 package com.asteiner.edc.Controller;
 
 import com.asteiner.edc.Entity.Project;
+import com.asteiner.edc.Others.GetProjectDto;
 import com.asteiner.edc.Others.GetTaskDto;
 import com.asteiner.edc.Others.TaskDtoObject;
 import com.asteiner.edc.Service.ProjectService;
@@ -63,5 +64,11 @@ public class ProjectController
     @ResponseStatus(code = HttpStatus.OK)
     public void changeUserRoleInProject(@RequestBody String newRole, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @PathVariable("userToChangeRoleId") int userToChangeRoleId) {
         projectService.changeUserRole(projectId, userId, userToChangeRoleId, newRole);
+    }
+
+    @GetMapping("")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<GetProjectDto> getProjects(@PathVariable("userId") int userId) {
+        return projectService.getProjects(userId);
     }
 }

@@ -2,6 +2,7 @@ package com.asteiner.edc.Service;
 
 import com.asteiner.edc.Entity.*;
 import com.asteiner.edc.Exception.NotFoundException;
+import com.asteiner.edc.Others.GetProjectDto;
 import com.asteiner.edc.Others.GetTaskDto;
 import com.asteiner.edc.Others.GetTaskHistoryDto;
 import com.asteiner.edc.Others.TaskDtoObject;
@@ -47,6 +48,25 @@ public class ProjectServiceImpl implements ProjectService {
         userProjectRole.setRole("ADMIN");
 
         userProjectRoleRepository.save(userProjectRole);
+    }
+
+    @Override
+    public List<GetProjectDto> getProjects(int userId) {
+        List<Project> projects = projectRepository.findAllProjectsByUserId(userId);
+
+        List<GetProjectDto> projectsDto = new ArrayList<>();
+
+        for (Project project : projects) {
+            GetProjectDto projectDto = new GetProjectDto();
+            projectDto.setId(project.getId());
+            projectDto.setName(project.getName());
+            projectDto.setDescription(project.getDescription());
+            projectDto.setStartedAt(project.getStartedAt());
+
+            projectsDto.add(projectDto);
+        }
+
+        return projectsDto;
     }
 
     @Override

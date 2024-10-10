@@ -1,6 +1,7 @@
 package com.asteiner.edc.Service;
 
 import com.asteiner.edc.Entity.Project;
+import com.asteiner.edc.Others.GetProjectDto;
 import com.asteiner.edc.Others.GetTaskDto;
 import com.asteiner.edc.Others.TaskDtoObject;
 
@@ -8,6 +9,9 @@ import java.util.List;
 
 public interface ProjectService {
     void create(Project project, int userId);
+
+//    List<GetProjectDto> getProjects(int userId);
+    List<GetProjectDto> getProjects(int userId);
 
     void addUser(int projectId, int userId, String email);
 
