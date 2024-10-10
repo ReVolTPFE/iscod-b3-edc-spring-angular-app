@@ -1,1 +1,37 @@
-<p>project works!</p>
+<main>
+  <h1>Projects list:</h1>
+
+  <div class="add-project">
+    <h2>Create new project</h2>
+
+    <form [formGroup]="createProjectForm" (ngSubmit)="onSubmit()">
+      <input type="text" id="name" formControlName="name" placeholder="Name">
+      <div *ngIf="submitted && f['name'].errors" class="errors">
+        <div *ngIf="f['name'].errors?.['required']">Name is required</div>
+      </div>
+
+      <input type="text" id="description" formControlName="description" placeholder="Description">
+      <div *ngIf="submitted && f['description'].errors" class="errors">
+        <div *ngIf="f['description'].errors?.['required']">Description is required</div>
+      </div>
+
+      <p>Start date:</p>
+      <input type="date" id="startedAt" formControlName="startedAt">
+      <div *ngIf="submitted && f['startedAt'].errors" class="errors">
+        <div *ngIf="f['startedAt'].errors?.['required']">Start date is required</div>
+      </div>
+
+      <input type="submit" value="Create project">
+    </form>
+  </div>
+
+  <div class="projects">
+    <a href="/project/{{project.id}}" *ngFor="let project of projects" >
+      <div class="project-card">
+        <h2>{{ project.name }}</h2>
+        <p><strong>Description:</strong> {{ project.description }}</p>
+        <p><strong>Start date:</strong> {{ project.startedAt }}</p>
+      </div>
+    </a>
+  </div>
+</main>

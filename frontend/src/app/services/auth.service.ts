@@ -3,15 +3,11 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, tap } from "rxjs";
 import { CookieService } from 'ngx-cookie-service';
 
-interface AuthResponse {
-  token: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly TOKEN_KEY = 'auth_token';
+  private readonly USER_ID = 'user_id';
   private apiUrl = 'http://localhost:8080/api/auth/login';
 
   constructor(
@@ -19,29 +15,29 @@ export class AuthService {
     private cookieService: CookieService
   ) { }
 
-  login(formData: { email: string; password: string }): Observable<AuthResponse> {
-    return this.httpClient.post<AuthResponse>(this.apiUrl, formData).pipe(
+  login(formData: { email: string; password: string }): Observable<any> {
+    return this.httpClient.post<any>(this.apiUrl, formData).pipe(
       tap(response => {
-        if (response && response.token) {
-          this.setToken(response.token);
+        if (response && response) {
+          this.setUserId(response);
         }
       })
     );
   }
 
   logout(): void {
-    this.cookieService.delete(this.TOKEN_KEY);
+    this.cookieService.delete(this.USER_ID);
   }
 
-  getToken(): string | null {
-    return this.cookieService.get(this.TOKEN_KEY) || null;
+  getUserId(): string | null {
+    return this.cookieService.get(this.USER_ID) || null;
   }
 
-  private setToken(token: string): void {
-    this.cookieService.set(this.TOKEN_KEY, token, 1);
+  private setUserId(userId: string): void {
+    this.cookieService.set(this.USER_ID, userId, 1);
   }
 
   isAuthenticated(): boolean {
-    return this.cookieService.check(this.TOKEN_KEY);
+    return this.cookieService.check(this.USER_ID);
   }
 }

@@ -30,7 +30,6 @@ export class LoginTemplateDrivenComponent {
   onSubmit() {
     this.submitted = true;
 
-    console.log(this.loginForm)
     if (this.loginForm.invalid) {
       return;
     }
@@ -47,7 +46,6 @@ export class LoginTemplateDrivenComponent {
       },
       error: (error) => {
         this.error = error.error?.message || 'An error occurred during login';
-        console.error('Login error:', error);
       }
     });
   }

@@ -22,7 +22,7 @@ main {
 
   form {
     position: relative;
-    width: 25%;
+    width: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,6 +42,14 @@ main {
       font-weight: bold;
       color: $white;
       cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 720px) {
+  main {
+    form {
+      width: 90%;
     }
   }
 }

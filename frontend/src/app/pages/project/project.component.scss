@@ -1,0 +1,98 @@
+@import "../../../assets/variables";
+
+main {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+
+  h1 {
+    font-weight: bold;
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .add-project {
+    margin: 30px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    form {
+      position: relative;
+      width: 40%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .errors {
+        margin-bottom: 10px;
+        color: red;
+      }
+
+      input {
+        width: 100%;
+        height: 30px;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      input[type="submit"] {
+        padding: 5px 10px;
+        background-color: $blue;
+        border: none;
+        font-weight: bold;
+        color: $white;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .projects {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    a {
+      display: block;
+      text-decoration: none;
+      color: black;
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid $blue;
+      width: 45%;
+
+      .project-card {
+
+        h2 {
+          text-align: center;
+          padding-bottom: 10px;
+        }
+      }
+    }
+
+  }
+}
+
+@media screen and (max-width: 720px) {
+  main {
+    .add-project {
+      form {
+        width: 90%;
+      }
+    }
+
+    .projects {
+      a {
+        width: 90%;
+      }
+    }
+  }
+}
