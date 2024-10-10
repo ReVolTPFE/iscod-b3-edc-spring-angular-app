@@ -3,7 +3,6 @@ package com.asteiner.edc.unit.Others;
 import com.asteiner.edc.Others.GetTaskDto;
 import com.asteiner.edc.Others.GetTaskHistoryDto;
 import com.asteiner.edc.Others.TaskDtoObject;
-import com.asteiner.edc.Others.Token;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -83,15 +82,5 @@ public class OthersTest {
         assertEquals(priority, taskDtoObject.getPriority());
         assertEquals(dueDate, taskDtoObject.getDueDate());
         assertEquals(endedAt, taskDtoObject.getEndedAt());
-    }
-
-    @Test
-    void token() {
-        String token = "1234AZERTY-5678";
-
-        Token token1 = new Token();
-        token1.setToken(token);
-
-        assertEquals(token, token1.getToken());
     }
 }

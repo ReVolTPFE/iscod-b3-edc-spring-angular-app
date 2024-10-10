@@ -33,6 +33,10 @@ public class User
     )
     private Set<Task> tasks = new HashSet<>();
 
+    public int getId() {
+        return id;
+    }
+
     public String getUsername() {
         return username;
     }
