@@ -1,0 +1,22 @@
+<main>
+  <h1>Login</h1>
+
+  <div *ngIf="error" class="errors">
+    {{ error }}
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <input type="email" id="email" formControlName="email" placeholder="Email">
+    <div *ngIf="submitted && f['email'].errors" class="errors">
+      <div *ngIf="f['email'].errors?.['required']">Email is required</div>
+      <div *ngIf="f['email'].errors?.['email']">Email must be valid</div>
+    </div>
+
+    <input type="password" id="password" formControlName="password" placeholder="Password">
+    <div *ngIf="submitted && f['password'].errors" class="errors">
+      <div *ngIf="f['password'].errors?.['required']">Password is required</div>
+    </div>
+
+    <input type="submit" value="Login">
+  </form>
+</main>

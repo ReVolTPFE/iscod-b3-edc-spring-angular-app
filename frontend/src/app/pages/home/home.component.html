@@ -1,0 +1,11 @@
+<main>
+  <div *ngIf="authService.isAuthenticated()">
+    <p>Go to the projects:</p>
+    <a href="/project">Projects</a>
+  </div>
+
+  <div *ngIf="!authService.isAuthenticated()">
+    <p>Login to use the website features:</p>
+    <a href="/login">Login</a>
+  </div>
+</main>
