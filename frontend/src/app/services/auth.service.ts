@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.cookieService.delete(this.USER_ID);
+    this.cookieService.delete(this.USER_ID, '/');
   }
 
   getUserId(): string | null {
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   private setUserId(userId: string): void {
-    this.cookieService.set(this.USER_ID, userId, 1);
+    this.cookieService.set(this.USER_ID, userId, 1, '/');
   }
 
   isAuthenticated(): boolean {
