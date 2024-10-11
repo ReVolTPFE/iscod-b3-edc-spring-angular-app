@@ -27,6 +27,8 @@
     </div>
   </div>
 
+  <app-add-task (taskCreated)="onTaskCreated()"></app-add-task>
+
   <div *ngIf="tasks" class="tasks">
     <div *ngFor="let task of tasks | keyvalue">
       <a href="/project/{{project.id}}/task/{{task.value.id}}" *ngIf="getLastTaskHistory(task.value)" class="task-card">

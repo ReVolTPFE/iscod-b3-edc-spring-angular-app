@@ -12,6 +12,7 @@ import {LoginTemplateDrivenComponent} from "./pages/login-template-driven/login-
 import { HeaderComponent } from './components/header/header.component';
 import { ProjectDetailComponent } from './pages/project-detail/project-detail.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { AddTaskComponent } from './components/add-task/add-task.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { RegisterComponent } from './pages/register/register.component';
     HeaderComponent,
     ProjectDetailComponent,
     RegisterComponent,
+    AddTaskComponent,
   ],
   imports: [
     BrowserModule,

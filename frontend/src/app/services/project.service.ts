@@ -9,6 +9,15 @@ interface ProjectBody {
   startedAt: string;
 }
 
+interface TaskBody {
+  name: string;
+  description: string;
+  status: string;
+  priority: string;
+  dueDate: string;
+  endedAt: string|null;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -55,6 +64,14 @@ export class ProjectService {
 
   addUserInProject(projectId: number, userEmail: string): Observable<any> {
     return this.httpClient.post<any>(this.baseApiUrl+"/" + projectId + "/addUser", userEmail).pipe(
+      tap(response => {
+
+      })
+    );
+  }
+
+  addTaskInProject(projectId: number, task: TaskBody) {
+    return this.httpClient.post<any>(this.baseApiUrl+"/" + projectId + "/task/create", task).pipe(
       tap(response => {
 
       })

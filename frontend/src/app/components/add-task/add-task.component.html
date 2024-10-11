@@ -1,0 +1,43 @@
+<div class="add-task">
+  <h2>Add new task to project:</h2>
+
+  <form [formGroup]="addTaskForm" (ngSubmit)="onSubmit()">
+    <input type="text" id="name" formControlName="name" placeholder="Name">
+    <div *ngIf="submitted && f['name'].errors" class="errors">
+      <div *ngIf="f['name'].errors?.['required']">Name is required</div>
+    </div>
+
+    <input type="text" id="description" formControlName="description" placeholder="Description">
+    <div *ngIf="submitted && f['description'].errors" class="errors">
+      <div *ngIf="f['description'].errors?.['required']">Description is required</div>
+    </div>
+
+    <select name="status" id="status" formControlName="status">
+      <option disabled selected value="">Choose a status</option>
+      <option value="TODO">TODO</option>
+      <option value="ONGOING">ONGOING</option>
+      <option value="DONE">DONE</option>
+    </select>
+    <div *ngIf="submitted && f['status'].errors" class="errors">
+      <div *ngIf="f['status'].errors?.['required']">Status is required</div>
+    </div>
+
+    <select name="priority" id="priority" formControlName="priority">
+      <option disabled selected value="">Choose a priority</option>
+      <option value="LOW">LOW</option>
+      <option value="MEDIUM">MEDIUM</option>
+      <option value="HIGH">HIGH</option>
+    </select>
+    <div *ngIf="submitted && f['priority'].errors" class="errors">
+      <div *ngIf="f['priority'].errors?.['required']">Priority is required</div>
+    </div>
+
+    <p>Due date:</p>
+    <input type="date" id="dueDate" formControlName="dueDate">
+    <div *ngIf="submitted && f['dueDate'].errors" class="errors">
+      <div *ngIf="f['dueDate'].errors?.['required']">Due date is required</div>
+    </div>
+
+    <input type="submit" value="Add new task">
+  </form>
+</div>

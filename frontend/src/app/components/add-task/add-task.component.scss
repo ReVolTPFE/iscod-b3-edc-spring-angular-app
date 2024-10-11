@@ -1,0 +1,49 @@
+@import "../../../assets/variables";
+
+.add-task {
+  margin: 20px 0;
+  padding: 20px;
+  border: 2px solid $blue;
+  border-radius: 10px;
+  background-color: $lightgray;
+
+  h2 {
+    font-size: 1.5rem;
+    color: $blue;
+    margin-bottom: 15px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    input[type="text"], input[type="date"], select {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid $gray;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    input[type="submit"] {
+      padding: 10px 15px;
+      background-color: $blue;
+      color: $white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($blue, 10%);
+      }
+    }
+
+    .errors {
+      color: $red;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+    }
+  }
+}

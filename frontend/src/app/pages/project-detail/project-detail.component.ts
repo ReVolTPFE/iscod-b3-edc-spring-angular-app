@@ -133,4 +133,8 @@ export class ProjectDetailComponent {
       }
     });
   }
+
+  onTaskCreated() {
+    this.projectService.getProjectTasks(this.projectId);
+  }
 }
