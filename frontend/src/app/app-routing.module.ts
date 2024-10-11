@@ -8,6 +8,7 @@ import {HomeComponent} from "./pages/home/home.component";
 import {ProjectComponent} from "./pages/project/project.component";
 import {ProjectDetailComponent} from "./pages/project-detail/project-detail.component";
 import {RegisterComponent} from "./pages/register/register.component";
+import {TaskComponent} from "./pages/task/task.component";
 
 const routes: Routes = [
   {
@@ -31,6 +32,11 @@ const routes: Routes = [
     path: 'project/:projectId',
     canActivate: [AuthGuard],
     component: ProjectDetailComponent,
+  },
+  {
+    path: 'project/:projectId/task/:taskId',
+    canActivate: [AuthGuard],
+    component: TaskComponent,
   },
   {
     path: 'not-found',

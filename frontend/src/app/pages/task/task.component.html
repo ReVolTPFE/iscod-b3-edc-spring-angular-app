@@ -1,0 +1,74 @@
+<main *ngIf="task">
+  <h1>{{ getLastTaskHistory(task)?.name }}</h1>
+
+  <div class="task-details">
+    <h2>Task details:</h2>
+
+    <p><strong>Description:</strong> {{ getLastTaskHistory(task)?.description }}</p>
+    <p><strong>Status:</strong> <span class="{{ getLastTaskHistory(task)?.status }}">{{ getLastTaskHistory(task)?.status }}</span></p>
+    <p><strong>Priority:</strong> <span class="{{ getLastTaskHistory(task)?.priority }}">{{ getLastTaskHistory(task)?.priority }}</span></p>
+    <p><strong>Due date:</strong> {{ getLastTaskHistory(task)?.dueDate }}</p>
+    <p><strong>Ended at:</strong> {{ getLastTaskHistory(task)?.endedAt }}</p>
+  </div>
+
+  <div class="edit-task">
+    <h2>Edit this task:</h2>
+
+    <form [formGroup]="editTaskForm" (ngSubmit)="onSubmit()">
+      <input type="text" id="name" formControlName="name" placeholder="Name">
+      <div *ngIf="submitted && f['name'].errors" class="errors">
+        <div *ngIf="f['name'].errors?.['required']">Name is required</div>
+      </div>
+
+      <input type="text" id="description" formControlName="description" placeholder="Description">
+      <div *ngIf="submitted && f['description'].errors" class="errors">
+        <div *ngIf="f['description'].errors?.['required']">Description is required</div>
+      </div>
+
+      <select name="status" id="status" formControlName="status">
+        <option disabled selected value="">Choose a status</option>
+        <option value="TODO">TODO</option>
+        <option value="ONGOING">ONGOING</option>
+        <option value="DONE">DONE</option>
+      </select>
+      <div *ngIf="submitted && f['status'].errors" class="errors">
+        <div *ngIf="f['status'].errors?.['required']">Status is required</div>
+      </div>
+
+      <select name="priority" id="priority" formControlName="priority">
+        <option disabled selected value="">Choose a priority</option>
+        <option value="LOW">LOW</option>
+        <option value="MEDIUM">MEDIUM</option>
+        <option value="HIGH">HIGH</option>
+      </select>
+      <div *ngIf="submitted && f['priority'].errors" class="errors">
+        <div *ngIf="f['priority'].errors?.['required']">Priority is required</div>
+      </div>
+
+      <p>Due date:</p>
+      <input type="date" id="dueDate" formControlName="dueDate">
+      <div *ngIf="submitted && f['dueDate'].errors" class="errors">
+        <div *ngIf="f['dueDate'].errors?.['required']">Due date is required</div>
+      </div>
+
+      <p>End date:</p>
+      <input type="date" id="endedAt" formControlName="endedAt">
+
+      <input type="submit" value="Edit task">
+    </form>
+  </div>
+
+  <h2>Task histories:</h2>
+  <div class="task-histories">
+
+    <!-- .slice(0, task.taskHistories.length - 1).reverse() to not show current history and to show them from most to least recent one -->
+    <div class="history-card" *ngFor="let history of task.taskHistories.slice(0, task.taskHistories.length - 1).reverse()">
+      <h2>{{ history.name }}</h2>
+      <p><strong>Description:</strong> {{ history.description }}</p>
+      <p><strong>Status:</strong> <span class="{{ history.status }}">{{ history.status }}</span></p>
+      <p><strong>Priority:</strong> <span class="{{ history.priority }}">{{ history.priority }}</span></p>
+      <p><strong>Due date:</strong> {{ history.dueDate }}</p>
+      <p><strong>Ended at:</strong> {{ history.endedAt }}</p>
+    </div>
+  </div>
+</main>

@@ -1,6 +1,7 @@
 package com.asteiner.edc.Others;
 
 public class GetUserWithProjectRoleDto {
+
     private int userId;
     private String username;
     private String email;

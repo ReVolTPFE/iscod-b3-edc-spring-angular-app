@@ -97,7 +97,6 @@ export class ProjectDetailComponent {
       next: (response) => {
         this.users = response;
         this.usersNotInProject = this.filterUsersNotInProject();
-        console.log(this.usersNotInProject);
       },
       error: (error) => {
         console.error(error);
@@ -136,5 +135,22 @@ export class ProjectDetailComponent {
 
   onTaskCreated() {
     this.projectService.getProjectTasks(this.projectId);
+  }
+
+  sortByRoleAndId(a: any, b: any): number {
+    if (a.value.role < b.value.role) {
+      return -1;
+    }
+    if (a.value.role > b.value.role) {
+      return 1;
+    }
+    // if the roles are the same, we compare userIds
+    if (a.value.userId < b.value.userId) {
+      return -1;
+    }
+    if (a.value.userId > b.value.userId) {
+      return 1;
+    }
+    return 0;
   }
 }

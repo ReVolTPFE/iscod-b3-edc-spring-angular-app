@@ -13,6 +13,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { ProjectDetailComponent } from './pages/project-detail/project-detail.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AddTaskComponent } from './components/add-task/add-task.component';
+import { TaskComponent } from './pages/task/task.component';
+import { UserRoleComponent } from './components/user-role/user-role.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { AddTaskComponent } from './components/add-task/add-task.component';
     ProjectDetailComponent,
     RegisterComponent,
     AddTaskComponent,
+    TaskComponent,
+    UserRoleComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,12 @@
+<div>
+  <form [formGroup]="changeUserRoleInProjectForm" (ngSubmit)="onSubmit()">
+    <select name="role" id="role" formControlName="role">
+      <option value="ADMIN" [selected]="user['value'].role === 'ADMIN'">ADMIN</option>
+      <option value="MEMBER" [selected]="user['value'].role === 'MEMBER'">MEMBER</option>
+      <option value="GUEST" [selected]="user['value'].role === 'GUEST'">GUEST</option>
+    </select>
+
+    <input type="submit" value="Change role">
+  </form>
+  <span> : {{user['value'].username}} <{{user['value'].email}}></span>
+</div>

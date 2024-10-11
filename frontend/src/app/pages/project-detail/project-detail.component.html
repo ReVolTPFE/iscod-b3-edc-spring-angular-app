@@ -8,8 +8,8 @@
     <div class="current-users">
       <h2>Users:</h2>
 
-      <div *ngFor="let user of project.users | keyvalue">
-        <p><strong>{{user.value.role}}</strong> : {{user.value.username}} <{{user.value.email}}></p>
+      <div *ngFor="let user of project.users | keyvalue: sortByRoleAndId">
+        <app-user-role [user]="user"></app-user-role>
       </div>
     </div>
 
@@ -35,8 +35,8 @@
         <div>
           <h2>{{ getLastTaskHistory(task.value)?.name }}</h2>
           <p><strong>Description:</strong> {{ getLastTaskHistory(task.value)?.description }}</p>
-          <p><strong>Status:</strong> {{ getLastTaskHistory(task.value)?.status }}</p>
-          <p><strong>Priority:</strong> {{ getLastTaskHistory(task.value)?.priority }}</p>
+          <p><strong>Status:</strong> <span class="{{ getLastTaskHistory(task.value)?.status }}">{{ getLastTaskHistory(task.value)?.status }}</span></p>
+          <p><strong>Priority:</strong> <span class="{{ getLastTaskHistory(task.value)?.priority }}">{{ getLastTaskHistory(task.value)?.priority }}</span></p>
           <p><strong>Due date:</strong> {{ getLastTaskHistory(task.value)?.dueDate }}</p>
           <p><strong>Ended at:</strong> {{ getLastTaskHistory(task.value)?.endedAt }}</p>
         </div>

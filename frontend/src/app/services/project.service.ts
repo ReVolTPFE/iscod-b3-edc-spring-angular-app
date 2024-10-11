@@ -77,4 +77,28 @@ export class ProjectService {
       })
     );
   }
+
+  editTaskInProject(projectId: number, taskId: number, task: TaskBody) {
+    return this.httpClient.patch<any>(this.baseApiUrl+"/" + projectId + "/task/" + taskId + '/edit', task).pipe(
+      tap(response => {
+
+      })
+    );
+  }
+
+  getTask(projectId: number, taskId: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseApiUrl + '/' + projectId + '/task/' + taskId).pipe(
+      tap(response => {
+
+      })
+    );
+  }
+
+  changeUserRole(projectId: number, userToChangeRoleId: number, role: string) {
+    return this.httpClient.put<any>(this.baseApiUrl+"/" + projectId + "/changeUserRole/" + userToChangeRoleId, role).pipe(
+      tap(response => {
+
+      })
+    );
+  }
 }

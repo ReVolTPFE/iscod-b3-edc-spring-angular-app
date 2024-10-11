@@ -1,0 +1,103 @@
+@import "../../../assets/variables";
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: $white;
+
+  h1 {
+    font-size: 2rem;
+    color: $blue;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    color: $blue;
+    margin: 0 0 10px 0;
+  }
+
+  .task-details {
+    p {
+      margin-bottom: 10px;
+    }
+  }
+
+  .edit-task {
+    margin: 40px 0;
+    padding: 20px;
+    border: 2px solid $blue;
+    border-radius: 10px;
+    background-color: $lightgray;
+
+    form {
+      display: flex;
+      flex-direction: column;
+
+      input[type="text"], input[type="date"], select {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid $gray;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      input[type="submit"] {
+        padding: 10px 15px;
+        background-color: $blue;
+        color: $white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: darken($blue, 10%);
+        }
+      }
+
+      .errors {
+        color: $red;
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .task-histories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+
+    .history-card {
+      height: 100%;
+      display: block;
+      padding: 20px;
+      margin-top: 20px;
+      border: 2px solid $gray;
+      border-radius: 10px;
+      text-decoration: none;
+      color: $darkgray;
+      background-color: $lightgray;
+
+      h2 {
+        font-size: 1.5rem;
+        color: $gray;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin: 10px 0;
+        font-size: 1rem;
+        color: $gray;
+
+        strong {
+          color: $darkgray;
+        }
+      }
+    }
+  }
+}

@@ -5,3 +5,33 @@ $red: #e12424;
 $gray: #939393;
 $lightgray: #f5f5f5;
 $darkgray: #2f2f2f;
+
+.LOW {
+  color: #dec04a;
+  font-weight: bold;
+}
+
+.MEDIUM {
+  color: #fd7122;
+  font-weight: bold;
+}
+
+.HIGH {
+  color: #f50000;
+  font-weight: bold;
+}
+
+.TODO {
+  color: #da891a;
+  font-weight: bold;
+}
+
+.ONGOING {
+  color: #1d83f8;
+  font-weight: bold;
+}
+
+.DONE {
+  color: #20b21a;
+  font-weight: bold;
+}

@@ -18,6 +18,7 @@ public class Task
     private Project project;
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    @OrderBy("id ASC")
     private Set<TaskHistory> taskHistories;
 
     @ManyToMany(mappedBy = "tasks")
