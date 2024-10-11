@@ -19,6 +19,49 @@ main {
     color: $darkgray;
   }
 
+  .users {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    h2 {
+      font-size: 1.2rem;
+      color: $darkgray;
+      margin: 20px 0 10px 0;
+    }
+
+    .add-user {
+      form {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+
+        select {
+          padding: 10px;
+          margin-bottom: 15px;
+          border: 1px solid $gray;
+          border-radius: 5px;
+          font-size: 1rem;
+        }
+
+        input[type="submit"] {
+          padding: 10px 15px;
+          background-color: $blue;
+          color: $white;
+          border: none;
+          border-radius: 5px;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: darken($blue, 10%);
+          }
+        }
+      }
+    }
+  }
+
   .tasks {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

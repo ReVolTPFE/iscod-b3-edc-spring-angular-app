@@ -1,12 +1,17 @@
 package com.asteiner.edc.Others;
 
+import com.asteiner.edc.Entity.User;
+
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GetProjectDto {
     private int id;
     private String name;
     private String description;
     private LocalDate startedAt;
+    private Set<GetUserWithProjectRoleDto> users = new HashSet<>();
 
     public int getId() {
         return id;
@@ -38,5 +43,16 @@ public class GetProjectDto {
 
     public void setStartedAt(LocalDate startedAt) {
         this.startedAt = startedAt;
+    }
+
+    public Set<GetUserWithProjectRoleDto> getUsers() {
+        return users;
+    }
+
+    public void addUser(GetUserWithProjectRoleDto user) {
+        if (users == null) {
+            users = new HashSet<>();
+        }
+        users.add(user);
     }
 }

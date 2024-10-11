@@ -60,10 +60,22 @@ public class ProjectController
         return projectService.getTask(userId, projectId, taskId);
     }
 
+    @GetMapping("/{projectId}/task")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<GetTaskDto> getTasks(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId) {
+        return projectService.getTasks(userId, projectId);
+    }
+
     @PutMapping("/{projectId}/changeUserRole/{userToChangeRoleId}")
     @ResponseStatus(code = HttpStatus.OK)
     public void changeUserRoleInProject(@RequestBody String newRole, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @PathVariable("userToChangeRoleId") int userToChangeRoleId) {
         projectService.changeUserRole(projectId, userId, userToChangeRoleId, newRole);
+    }
+
+    @GetMapping("/{projectId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public GetProjectDto getProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId) {
+        return projectService.getProject(userId, projectId);
     }
 
     @GetMapping("")

@@ -4,6 +4,29 @@
   <p><strong>Description:</strong> {{ project.description }}</p>
   <p><strong>Start date:</strong> {{ project.startedAt }}</p>
 
+  <div class="users">
+    <div class="current-users">
+      <h2>Users:</h2>
+
+      <div *ngFor="let user of project.users | keyvalue">
+        <p><strong>{{user.value.role}}</strong> : {{user.value.username}} <{{user.value.email}}></p>
+      </div>
+    </div>
+
+    <div class="add-user">
+      <h2>Add user to project:</h2>
+
+      <form [formGroup]="addUserInProjectForm" (ngSubmit)="onSubmit()">
+        <select name="email" id="email" formControlName="email">
+          <option disabled selected value="">Choose user to add</option>
+          <option *ngFor="let user of usersNotInProject" value="{{user.email}}">{{user.username}} <{{user.email}}></option>
+        </select>
+
+        <input type="submit" value="Add user">
+      </form>
+    </div>
+  </div>
+
   <div *ngIf="tasks" class="tasks">
     <div *ngFor="let task of tasks | keyvalue">
       <a href="/project/{{project.id}}/task/{{task.value.id}}" *ngIf="getLastTaskHistory(task.value)" class="task-card">

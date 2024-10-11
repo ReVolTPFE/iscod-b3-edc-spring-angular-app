@@ -24,9 +24,7 @@ export class ProjectService {
   createProject(formData: ProjectBody): Observable<any> {
     return this.httpClient.post<any>(this.baseApiUrl+"/create", formData).pipe(
       tap(response => {
-        if (response) {
-          console.log(response)
-        }
+
       })
     );
   }
@@ -49,6 +47,14 @@ export class ProjectService {
 
   getProjectTasks(projectId: number): Observable<any> {
     return this.httpClient.get<any>(this.baseApiUrl + '/' + projectId + '/task').pipe(
+      tap(response => {
+
+      })
+    );
+  }
+
+  addUserInProject(projectId: number, userEmail: string): Observable<any> {
+    return this.httpClient.post<any>(this.baseApiUrl+"/" + projectId + "/addUser", userEmail).pipe(
       tap(response => {
 
       })

@@ -11,6 +11,7 @@ import {ErrorComponent} from "./pages/error/error.component";
 import {LoginTemplateDrivenComponent} from "./pages/login-template-driven/login-template-driven.component";
 import { HeaderComponent } from './components/header/header.component';
 import { ProjectDetailComponent } from './pages/project-detail/project-detail.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ProjectDetailComponent } from './pages/project-detail/project-detail.co
     LoginTemplateDrivenComponent,
     HeaderComponent,
     ProjectDetailComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

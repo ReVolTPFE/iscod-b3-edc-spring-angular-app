@@ -7,6 +7,7 @@ import {LoginTemplateDrivenComponent} from "./pages/login-template-driven/login-
 import {HomeComponent} from "./pages/home/home.component";
 import {ProjectComponent} from "./pages/project/project.component";
 import {ProjectDetailComponent} from "./pages/project-detail/project-detail.component";
+import {RegisterComponent} from "./pages/register/register.component";
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginTemplateDrivenComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
   {
     path: 'project',

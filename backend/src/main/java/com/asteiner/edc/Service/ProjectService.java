@@ -10,8 +10,9 @@ import java.util.List;
 public interface ProjectService {
     void create(Project project, int userId);
 
-//    List<GetProjectDto> getProjects(int userId);
     List<GetProjectDto> getProjects(int userId);
+
+    GetProjectDto getProject(int userId, int projectId);
 
     void addUser(int projectId, int userId, String email);
 
@@ -22,6 +23,8 @@ public interface ProjectService {
     void addUserOnTask(int userId, int projectId, int taskId, int userToAddId);
 
     void editTask(int userId, int projectId, int taskId, TaskDtoObject taskDtoObject);
+
+    List<GetTaskDto> getTasks(int userId, int projectId);
 
     GetTaskDto getTask(int userId, int projectId, int taskId);
 

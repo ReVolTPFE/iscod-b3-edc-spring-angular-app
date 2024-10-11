@@ -2,10 +2,7 @@ package com.asteiner.edc.Service;
 
 import com.asteiner.edc.Entity.*;
 import com.asteiner.edc.Exception.NotFoundException;
-import com.asteiner.edc.Others.GetProjectDto;
-import com.asteiner.edc.Others.GetTaskDto;
-import com.asteiner.edc.Others.GetTaskHistoryDto;
-import com.asteiner.edc.Others.TaskDtoObject;
+import com.asteiner.edc.Others.*;
 import com.asteiner.edc.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,6 +64,30 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         return projectsDto;
+    }
+
+    @Override
+    public GetProjectDto getProject(int userId, int projectId) {
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+        checkUserInProject(user, project);
+
+        GetProjectDto projectDto = new GetProjectDto();
+        projectDto.setId(project.getId());
+        projectDto.setName(project.getName());
+        projectDto.setDescription(project.getDescription());
+        projectDto.setStartedAt(project.getStartedAt());
+
+        for (UserProjectRole userProjectRole : project.getUserProjectRoles()) {
+            GetUserWithProjectRoleDto userObject = new GetUserWithProjectRoleDto();
+            userObject.setUserId(userProjectRole.getUser().getId());
+            userObject.setUsername(userProjectRole.getUser().getUsername());
+            userObject.setEmail(userProjectRole.getUser().getEmail());
+            userObject.setRole(userProjectRole.getRole());
+            projectDto.addUser(userObject);
+        }
+
+        return projectDto;
     }
 
     @Override
@@ -197,6 +218,46 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         taskHistoryRepository.save(taskHistory);
+    }
+
+    @Override
+    public List<GetTaskDto> getTasks(int userId, int projectId) {
+        //Check first if user making the request is in project
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new NotFoundException("Project not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+        checkUserInProject(user, project);
+
+        List<Task> tasks = taskRepository.findByProject(project);
+
+        List<GetTaskDto> tasksDto = new ArrayList<>();
+
+        for (Task task : tasks) {
+
+            GetTaskDto taskDto = new GetTaskDto();
+            taskDto.setId(task.getId());
+            taskDto.setProjectId(task.getProject().getId());
+
+            List<GetTaskHistoryDto> taskHistoryDtos = task.getTaskHistories().stream()
+                .map(history -> {
+                    GetTaskHistoryDto dto = new GetTaskHistoryDto();
+                    dto.setId(history.getId());
+                    dto.setName(history.getName());
+                    dto.setDescription(history.getDescription());
+                    dto.setPriority(history.getPriority());
+                    dto.setStatus(history.getStatus());
+                    dto.setDueDate(history.getDueDate());
+                    dto.setEndedAt(history.getEndedAt());
+                    dto.setTaskId(history.getTask().getId());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+            taskDto.setTaskHistories(taskHistoryDtos);
+
+            tasksDto.add(taskDto);
+        }
+
+        return tasksDto;
     }
 
     @Override
