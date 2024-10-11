@@ -8,17 +8,27 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthService {
   private readonly USER_ID = 'user_id';
-  private apiUrl = 'http://localhost:8080/api/auth/login';
+  private apiUrl = 'http://localhost:8080/api';
 
   constructor(
     private httpClient: HttpClient,
     private cookieService: CookieService
   ) { }
 
-  login(formData: { email: string; password: string }): Observable<any> {
-    return this.httpClient.post<any>(this.apiUrl, formData).pipe(
+  register(formData: { username: string; email: string; password: string }): Observable<any> {
+    return this.httpClient.post<any>(this.apiUrl + '/user/create', formData).pipe(
       tap(response => {
-        if (response && response) {
+        if (response) {
+          this.setUserId(response);
+        }
+      })
+    );
+  }
+
+  login(formData: { email: string; password: string }): Observable<any> {
+    return this.httpClient.post<any>(this.apiUrl + '/auth/login', formData).pipe(
+      tap(response => {
+        if (response) {
           this.setUserId(response);
         }
       })
