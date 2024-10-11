@@ -38,4 +38,20 @@ export class ProjectService {
       })
     );
   }
+
+  getProject(projectId: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseApiUrl + '/' + projectId).pipe(
+      tap(response => {
+
+      })
+    );
+  }
+
+  getProjectTasks(projectId: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseApiUrl + '/' + projectId + '/task').pipe(
+      tap(response => {
+
+      })
+    );
+  }
 }

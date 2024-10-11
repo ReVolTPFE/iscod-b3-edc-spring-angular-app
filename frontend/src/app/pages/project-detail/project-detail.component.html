@@ -1,1 +1,21 @@
-<p>project-detail works!</p>
+<main *ngIf="project">
+  <h1>{{project.name}}</h1>
+
+  <p><strong>Description:</strong> {{ project.description }}</p>
+  <p><strong>Start date:</strong> {{ project.startedAt }}</p>
+
+  <div *ngIf="tasks" class="tasks">
+    <div *ngFor="let task of tasks | keyvalue">
+      <a href="/project/{{project.id}}/task/{{task.value.id}}" *ngIf="getLastTaskHistory(task.value)" class="task-card">
+        <div>
+          <h2>{{ getLastTaskHistory(task.value)?.name }}</h2>
+          <p><strong>Description:</strong> {{ getLastTaskHistory(task.value)?.description }}</p>
+          <p><strong>Status:</strong> {{ getLastTaskHistory(task.value)?.status }}</p>
+          <p><strong>Priority:</strong> {{ getLastTaskHistory(task.value)?.priority }}</p>
+          <p><strong>Due date:</strong> {{ getLastTaskHistory(task.value)?.dueDate }}</p>
+          <p><strong>Ended at:</strong> {{ getLastTaskHistory(task.value)?.endedAt }}</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</main>
