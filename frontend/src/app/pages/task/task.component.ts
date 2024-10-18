@@ -26,6 +26,14 @@ interface Task {
   id: number;
   projectId: number;
   taskHistories: TaskHistory[];
+  users: { userId: number, username: string, email: string}[];
+}
+
+interface User {
+  userId: number;
+  username: string;
+  email: string;
+  role: string;
 }
 
 @Component({
@@ -44,6 +52,7 @@ export class TaskComponent {
   userAdmin = false;
   userMember = false;
   project?: Project;
+  usersNotInTask: User[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -52,8 +61,6 @@ export class TaskComponent {
     private router: Router,
     private authService: AuthService,
   ) {
-    this.getTask();
-
     this.loadData(this.projectId);
 
     this.editTaskForm = this.formBuilder.group({
@@ -69,11 +76,15 @@ export class TaskComponent {
   //to prevent loading of users before projects
   loadData(projectId: number) {
     forkJoin({
-      project: this.projectService.getProject(projectId)
+      project: this.projectService.getProject(projectId),
+      task: this.projectService.getTask(projectId, this.taskId)
     }).subscribe({
       next: (response) => {
         this.project = response.project;
+        this.task = response.task;
         this.isUserAdminOrMember(this.project);
+
+        this.usersNotInTask = this.filterUsersNotInTask();
       },
       error: (error) => {
         console.error(error);
@@ -81,11 +92,13 @@ export class TaskComponent {
     });
   }
 
-  get f() { return this.editTaskForm.controls; }
+  get f() { // @ts-ignore
+    return this.editTaskForm.controls; }
 
   onSubmit() {
     this.submitted = true;
 
+    // @ts-ignore
     if (this.editTaskForm.invalid) {
       return;
     }
@@ -114,6 +127,7 @@ export class TaskComponent {
       next: (response) => {
         this.task = response;
 
+        // @ts-ignore
         this.editTaskForm.patchValue({
           name: this.getLastTaskHistory(response)?.name,
           description: this.getLastTaskHistory(response)?.description,
@@ -156,6 +170,14 @@ export class TaskComponent {
       error: (error) => {
         console.error(error);
       }
+    });
+  }
+
+  filterUsersNotInTask() {
+    // @ts-ignore
+    return this.project.users.filter(projectUser => {
+      // @ts-ignore
+      return !this.task.users.some(taskUser => taskUser.id === projectUser.userId);
     });
   }
 }

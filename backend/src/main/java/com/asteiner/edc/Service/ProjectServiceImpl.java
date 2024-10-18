@@ -291,6 +291,19 @@ public class ProjectServiceImpl implements ProjectService {
 
         taskDto.setTaskHistories(taskHistoryDtos);
 
+        List<GetUserDto> userDtos = task.getUsers().stream()
+            .map(taskUser -> {
+                GetUserDto dto = new GetUserDto();
+                dto.setId(taskUser.getId());
+                dto.setUsername(taskUser.getUsername());
+                dto.setEmail(taskUser.getEmail());
+                return dto;
+            })
+            .collect(Collectors.toList())
+        ;
+
+        taskDto.setUsers(userDtos);
+
         return taskDto;
     }
 

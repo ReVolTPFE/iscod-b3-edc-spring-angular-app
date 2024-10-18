@@ -11,6 +11,20 @@
     <p><strong>Ended at:</strong> {{ getLastTaskHistory(task)?.endedAt }}</p>
   </div>
 
+  <div class="users">
+    <div class="current-users">
+      <h2>Users assigned to the task:</h2>
+
+      <div *ngFor="let user of task.users">
+        <p>{{user.username}} <{{user.email}}></p>
+      </div>
+    </div>
+
+    <div class="add-user" *ngIf="userAdmin || userMember">
+      <app-add-user-to-task [usersNotInTask]="usersNotInTask"></app-add-user-to-task>
+    </div>
+  </div>
+
   <div class="edit-task" *ngIf="userAdmin || userMember">
     <h2>Edit this task:</h2>
 

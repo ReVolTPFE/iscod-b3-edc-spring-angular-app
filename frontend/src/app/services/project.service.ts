@@ -101,4 +101,12 @@ export class ProjectService {
       })
     );
   }
+
+  assignUserInTask(userToAssignId: number, projectId: number, taskId: number) {
+    return this.httpClient.post<any>(this.baseApiUrl+"/" + projectId + "/task/" + taskId + "/addUser", userToAssignId).pipe(
+      tap(response => {
+
+      })
+    );
+  }
 }

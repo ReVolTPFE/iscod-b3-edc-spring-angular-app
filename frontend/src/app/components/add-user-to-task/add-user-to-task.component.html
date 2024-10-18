@@ -1,0 +1,10 @@
+<h2>Assign user to the task:</h2>
+
+<form [formGroup]="assignUserToTheTaskForm" (ngSubmit)="onSubmitAssignUser()">
+  <select name="userId" id="userId" formControlName="userId">
+    <option disabled selected value="">Choose user to add</option>
+    <option *ngFor="let user of usersNotInTask" value="{{user.userId}}">{{user.username}} <{{user.email}}></option>
+  </select>
+
+  <input type="submit" value="Add user">
+</form>

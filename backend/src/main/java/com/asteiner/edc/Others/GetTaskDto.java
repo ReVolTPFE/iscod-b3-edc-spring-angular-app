@@ -6,6 +6,7 @@ public class GetTaskDto {
     private int id;
     private int projectId;
     private List<GetTaskHistoryDto> taskHistories;
+    private List<GetUserDto> users;
 
     public int getId() {
         return id;
@@ -29,5 +30,13 @@ public class GetTaskDto {
 
     public void setTaskHistories(List<GetTaskHistoryDto> taskHistories) {
         this.taskHistories = taskHistories;
+    }
+
+    public List<GetUserDto> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<GetUserDto> users) {
+        this.users = users;
     }
 }
