@@ -9,6 +9,7 @@ import {ProjectComponent} from "./pages/project/project.component";
 import {ProjectDetailComponent} from "./pages/project-detail/project-detail.component";
 import {RegisterComponent} from "./pages/register/register.component";
 import {TaskComponent} from "./pages/task/task.component";
+import {TaskByStatusComponent} from "./pages/task-by-status/task-by-status.component";
 
 const routes: Routes = [
   {
@@ -32,6 +33,11 @@ const routes: Routes = [
     path: 'project/:projectId',
     canActivate: [AuthGuard],
     component: ProjectDetailComponent,
+  },
+  {
+    path: 'tasksByStatus',
+    canActivate: [AuthGuard],
+    component: TaskByStatusComponent,
   },
   {
     path: 'project/:projectId/task/:taskId',

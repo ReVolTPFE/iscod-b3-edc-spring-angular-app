@@ -1,9 +1,10 @@
 <header id="site-header">
-  <h1>PMS - Project Management Software</h1>
+  <h1>MPMT - Project Management Software</h1>
 
   <nav>
     <ul>
       <li><a href="/project">Projects</a></li>
+      <li><a href="/tasksByStatus">Tasks by status</a></li>
       <li>
         <a href="/login" *ngIf="!authService.isAuthenticated()">Login</a>
         <a href="/login" (click)="logout($event)" *ngIf="authService.isAuthenticated()">Logout</a>

@@ -1,4 +1,6 @@
 <main *ngIf="task">
+  <a href="/project/{{projectId}}" class="backlink">Back to project</a>
+
   <h1>{{ getLastTaskHistory(task)?.name }}</h1>
 
   <div class="task-details">

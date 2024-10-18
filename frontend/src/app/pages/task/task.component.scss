@@ -5,6 +5,25 @@ main {
   margin: 0 auto;
   padding: 20px;
   background-color: $white;
+  position: relative;
+
+  .backlink {
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 15px;
+    background-color: $red;
+    color: $white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+
+    &:hover {
+      background-color: darken($red, 10%);
+    }
+  }
 
   h1 {
     font-size: 2rem;

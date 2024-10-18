@@ -1,0 +1,26 @@
+<main>
+  <h1>Tasks of all your projects by status</h1>
+
+  <div class="filters">
+    <button (click)="selectView('all')">ALL</button>
+    <button (click)="selectView('TODO')">TODO</button>
+    <button (click)="selectView('ONGOING')">ONGOING</button>
+    <button (click)="selectView('DONE')">DONE</button>
+  </div>
+
+  <div *ngIf="tasks" class="tasks">
+    <ng-container *ngFor="let task of tasks">
+      <a href="/project/{{task.projectId}}/task/{{task.id}}" class="task-card" *ngIf="selectedView == 'all' || selectedView == getLastTaskHistory(task)?.status">
+        <div>
+          <h2>{{ getLastTaskHistory(task)?.name }}</h2>
+          <h2><strong>Project:</strong> {{task.projectName}}</h2>
+          <p><strong>Description:</strong> {{ getLastTaskHistory(task)?.description }}</p>
+          <p><strong>Status:</strong> <span class="{{ getLastTaskHistory(task)?.status }}">{{ getLastTaskHistory(task)?.status }}</span></p>
+          <p><strong>Priority:</strong> <span class="{{ getLastTaskHistory(task)?.priority }}">{{ getLastTaskHistory(task)?.priority }}</span></p>
+          <p><strong>Due date:</strong> {{ getLastTaskHistory(task)?.dueDate }}</p>
+          <p><strong>Ended at:</strong> {{ getLastTaskHistory(task)?.endedAt }}</p>
+        </div>
+      </a>
+    </ng-container>
+  </div>
+</main>

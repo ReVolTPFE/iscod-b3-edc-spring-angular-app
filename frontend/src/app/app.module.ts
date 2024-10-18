@@ -16,6 +16,7 @@ import { AddTaskComponent } from './components/add-task/add-task.component';
 import { TaskComponent } from './pages/task/task.component';
 import { UserRoleComponent } from './components/user-role/user-role.component';
 import { AddUserToTaskComponent } from './components/add-user-to-task/add-user-to-task.component';
+import { TaskByStatusComponent } from './pages/task-by-status/task-by-status.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { AddUserToTaskComponent } from './components/add-user-to-task/add-user-t
     TaskComponent,
     UserRoleComponent,
     AddUserToTaskComponent,
+    TaskByStatusComponent,
   ],
   imports: [
     BrowserModule,
