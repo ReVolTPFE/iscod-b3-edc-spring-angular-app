@@ -2,6 +2,16 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProjectService} from "../../services/project.service";
+import {AuthService} from "../../services/auth.service";
+import {forkJoin, Observable} from "rxjs";
+
+interface Project {
+  id: number;
+  name: string;
+  description: string;
+  startedAt: string;
+  users: { userId: number, username: string, email: string, role: string }[];
+}
 
 interface TaskHistory {
   name: string;
@@ -31,14 +41,20 @@ export class TaskComponent {
   projectId = Number(this.route.snapshot.paramMap.get('projectId'));
   taskId = Number(this.route.snapshot.paramMap.get('taskId'));
   @Output() taskCreated = new EventEmitter<void>();
+  userAdmin = false;
+  userMember = false;
+  project?: Project;
 
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private formBuilder: FormBuilder,
     private router: Router,
+    private authService: AuthService,
   ) {
     this.getTask();
+
+    this.loadData(this.projectId);
 
     this.editTaskForm = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -47,6 +63,21 @@ export class TaskComponent {
       priority: ['', [Validators.required]],
       dueDate: ['', [Validators.required]],
       endedAt: ['', []]
+    });
+  }
+
+  //to prevent loading of users before projects
+  loadData(projectId: number) {
+    forkJoin({
+      project: this.projectService.getProject(projectId)
+    }).subscribe({
+      next: (response) => {
+        this.project = response.project;
+        this.isUserAdminOrMember(this.project);
+      },
+      error: (error) => {
+        console.error(error);
+      }
     });
   }
 
@@ -100,5 +131,31 @@ export class TaskComponent {
 
   getLastTaskHistory(task: Task) {
     return task.taskHistories.length > 0 ? task.taskHistories[task.taskHistories.length - 1] : null;
+  }
+
+  isUserAdminOrMember(project: Project | undefined) {
+    const userId = this.authService.getUserId();
+
+    // @ts-ignore
+    const userInProject = project.users.find(user => user.userId == userId);
+
+    if (userInProject?.role == 'ADMIN') {
+      this.userAdmin = true;
+    }
+
+    if (userInProject?.role == 'MEMBER') {
+      this.userMember = true;
+    }
+  }
+
+  getProject(projectId: number) {
+    this.projectService.getProject(projectId).subscribe({
+      next: (response) => {
+        this.project = response;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 }

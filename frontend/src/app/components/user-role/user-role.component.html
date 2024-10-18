@@ -1,5 +1,5 @@
-<div>
-  <form [formGroup]="changeUserRoleInProjectForm" (ngSubmit)="onSubmit()">
+<div class="user">
+  <form [formGroup]="changeUserRoleInProjectForm" (ngSubmit)="onSubmit()" *ngIf="userAdmin">
     <select name="role" id="role" formControlName="role">
       <option value="ADMIN" [selected]="user['value'].role === 'ADMIN'">ADMIN</option>
       <option value="MEMBER" [selected]="user['value'].role === 'MEMBER'">MEMBER</option>
@@ -8,5 +8,5 @@
 
     <input type="submit" value="Change role">
   </form>
-  <span> : {{user['value'].username}} <{{user['value'].email}}></span>
+  <span class="infos"><span *ngIf="!userAdmin">{{user['value'].role}}</span> {{user['value'].username}} <{{user['value'].email}}></span>
 </div>

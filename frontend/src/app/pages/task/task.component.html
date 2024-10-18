@@ -11,7 +11,7 @@
     <p><strong>Ended at:</strong> {{ getLastTaskHistory(task)?.endedAt }}</p>
   </div>
 
-  <div class="edit-task">
+  <div class="edit-task" *ngIf="userAdmin || userMember">
     <h2>Edit this task:</h2>
 
     <form [formGroup]="editTaskForm" (ngSubmit)="onSubmit()">

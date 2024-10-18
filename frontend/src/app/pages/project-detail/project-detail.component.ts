@@ -4,13 +4,14 @@ import {ProjectService} from "../../services/project.service";
 import {UserService} from "../../services/user.service";
 import {forkJoin} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "../../services/auth.service";
 
 interface Project {
   id: number;
   name: string;
   description: string;
   startedAt: string;
-  users: Record<any, any>;
+  users: { userId: number, username: string, email: string, role: string }[];
 }
 
 interface User {
@@ -28,6 +29,8 @@ export class ProjectDetailComponent {
   addUserInProjectForm: FormGroup;
   submitted = false;
   error = '';
+  userAdmin = false;
+  userMember = false;
 
   protected project?: Project;
   protected tasks?: Record<any, any>;
@@ -41,6 +44,7 @@ export class ProjectDetailComponent {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router,
+    private authService: AuthService,
   ) {
     this.addUserInProjectForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -57,7 +61,7 @@ export class ProjectDetailComponent {
       next: (response) => {
         this.project = response.project;
         this.tasks = response.tasks;
-
+        this.isUserAdminOrMember(this.project);
         this.getUsers();
       },
       error: (error) => {
@@ -152,5 +156,20 @@ export class ProjectDetailComponent {
       return 1;
     }
     return 0;
+  }
+
+  isUserAdminOrMember(project: Project | undefined) {
+    const userId = this.authService.getUserId();
+
+    // @ts-ignore
+    const userInProject = project.users.find(user => user.userId == userId);
+
+    if (userInProject?.role == 'ADMIN') {
+      this.userAdmin = true;
+    }
+
+    if (userInProject?.role == 'MEMBER') {
+      this.userMember = true;
+    }
   }
 }

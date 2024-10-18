@@ -10,6 +10,7 @@ import {ProjectService} from "../../services/project.service";
 })
 export class UserRoleComponent {
   @Input() user!: Record<any, any>;
+  @Input() userAdmin!: boolean;
   changeUserRoleInProjectForm: FormGroup;
   submitted = false;
   error = '';

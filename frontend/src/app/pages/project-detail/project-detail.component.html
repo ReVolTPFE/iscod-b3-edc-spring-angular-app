@@ -9,11 +9,11 @@
       <h2>Users:</h2>
 
       <div *ngFor="let user of project.users | keyvalue: sortByRoleAndId">
-        <app-user-role [user]="user"></app-user-role>
+        <app-user-role [user]="user" [userAdmin]="userAdmin"></app-user-role>
       </div>
     </div>
 
-    <div class="add-user">
+    <div class="add-user" *ngIf="userAdmin">
       <h2>Add user to project:</h2>
 
       <form [formGroup]="addUserInProjectForm" (ngSubmit)="onSubmit()">
@@ -27,7 +27,9 @@
     </div>
   </div>
 
-  <app-add-task (taskCreated)="onTaskCreated()"></app-add-task>
+  <div *ngIf="userAdmin || userMember">
+    <app-add-task (taskCreated)="onTaskCreated()"></app-add-task>
+  </div>
 
   <div *ngIf="tasks" class="tasks">
     <div *ngFor="let task of tasks | keyvalue">
