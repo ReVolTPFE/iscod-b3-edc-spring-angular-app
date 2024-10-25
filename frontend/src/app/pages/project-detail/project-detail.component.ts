@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {ProjectService} from "../../services/project.service";
 import {UserService} from "../../services/user.service";
 import {forkJoin} from "rxjs";
@@ -32,10 +32,10 @@ export class ProjectDetailComponent {
   userAdmin = false;
   userMember = false;
 
-  protected project?: Project;
-  protected tasks?: Record<any, any>;
-  protected users?: User[];
-  protected usersNotInProject: User[] = [];
+  project?: Project;
+  tasks?: Record<any, any>;
+  users?: User[];
+  usersNotInProject: User[] = [];
   projectId = Number(this.route.snapshot.paramMap.get('projectId'));
 
   constructor(
@@ -43,7 +43,6 @@ export class ProjectDetailComponent {
     private projectService: ProjectService,
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private router: Router,
     private authService: AuthService,
   ) {
     this.addUserInProjectForm = this.formBuilder.group({
@@ -63,17 +62,6 @@ export class ProjectDetailComponent {
         this.tasks = response.tasks;
         this.isUserAdminOrMember(this.project);
         this.getUsers();
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
-  }
-
-  getProject(projectId: number) {
-    this.projectService.getProject(projectId).subscribe({
-      next: (response) => {
-        this.project = response;
       },
       error: (error) => {
         console.error(error);
