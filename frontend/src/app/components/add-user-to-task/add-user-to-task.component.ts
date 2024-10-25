@@ -1,8 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {ProjectService} from "../../services/project.service";
-import {AuthService} from "../../services/auth.service";
 
 interface User {
   userId: number;
@@ -27,8 +26,6 @@ export class AddUserToTaskComponent {
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private formBuilder: FormBuilder,
-    private router: Router,
-    private authService: AuthService,
   ) {
     this.assignUserToTheTaskForm = this.formBuilder.group({
       userId: ['', [Validators.required]],
