@@ -3,14 +3,14 @@
 
   <nav>
     <ul>
-      <li><a href="/project">Projects</a></li>
-      <li><a href="/tasksByStatus">Tasks by status</a></li>
+      <li *ngIf="authService.isAuthenticated()"><a href="/project">Projects</a></li>
+      <li *ngIf="authService.isAuthenticated()"><a href="/tasksByStatus">Tasks by status</a></li>
       <li>
         <a href="/login" *ngIf="!authService.isAuthenticated()">Login</a>
         <a href="/login" (click)="logout($event)" *ngIf="authService.isAuthenticated()">Logout</a>
       </li>
-      <li>
-        <a href="/register" *ngIf="!authService.isAuthenticated()">Register</a>
+      <li *ngIf="!authService.isAuthenticated()">
+        <a href="/register">Register</a>
       </li>
     </ul>
   </nav>
