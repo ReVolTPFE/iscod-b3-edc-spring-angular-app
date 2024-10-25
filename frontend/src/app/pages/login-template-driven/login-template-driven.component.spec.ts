@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {LoginTemplateDrivenComponent} from "./login-template-driven.component";
 import {ReactiveFormsModule} from "@angular/forms";
-import {ProjectService} from "../../services/project.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {of} from "rxjs";
@@ -61,7 +60,7 @@ describe('LoginTemplateDrivenComponent', () => {
     expect(authServiceMock.login).not.toHaveBeenCalled();
   });
 
-  it('should call projectService.addTaskInProject with correct parameters when form is valid', () => {
+  it('should call authService.login with correct parameters when form is valid', () => {
     component.loginForm.controls['email'].setValue('a@b.c');
     component.loginForm.controls['password'].setValue('azerty');
 
