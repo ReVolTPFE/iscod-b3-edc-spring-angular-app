@@ -38,7 +38,7 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call authService.logout() and router.navigateByUrl("/") on logout', () => {
+  it('should call authService.logout and router.navigateByUrl("/") on logout', () => {
     const event = new MouseEvent('click');
 
     component.logout(event);

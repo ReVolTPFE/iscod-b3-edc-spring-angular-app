@@ -1,15 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {ProjectService} from "../../services/project.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-
-interface Project {
-  id: number;
-  name: string;
-  description: string;
-  startedAt: string;
-  users: Record<any, any>;
-}
 
 @Component({
   selector: 'app-add-task',
@@ -27,7 +19,6 @@ export class AddTaskComponent {
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private formBuilder: FormBuilder,
-    private router: Router,
   ) {
     this.addTaskForm = this.formBuilder.group({
       name: ['', [Validators.required]],
