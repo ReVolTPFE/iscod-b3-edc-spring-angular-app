@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import {FormBuilder} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
 import {ProjectService} from "../../services/project.service";
 
 interface Project {
@@ -33,14 +31,11 @@ interface Task {
   styleUrls: ['./task-by-status.component.scss']
 })
 export class TaskByStatusComponent {
-  protected projects: Project[] = [];
-  protected tasks: Task[] = [];
+  projects: Project[] = [];
+  tasks: Task[] = [];
   selectedView: string = 'all';
 
   constructor(
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
     private projectService: ProjectService
   ) {
     this.getProjects();
