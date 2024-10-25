@@ -19,12 +19,10 @@ export class ProjectComponent {
   createProjectForm: FormGroup;
   submitted = false;
   error = '';
-  protected projects: Project[] = [];
+  projects: Project[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
     private projectService: ProjectService
   ) {
     this.getProjects();
