@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {ProjectService} from "../../services/project.service";
 
 @Component({
