@@ -142,8 +142,6 @@ describe('ProjectDetailComponent', () => {
     expect(projectServiceMock.addUserInProject).not.toHaveBeenCalled();
   });
 
-
-
   it('should get the last task history if task has histories', () => {
     const task = {
       taskHistories: [

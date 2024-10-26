@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {ProjectService} from "../../services/project.service";
 import {AuthService} from "../../services/auth.service";
-import {forkJoin, Observable} from "rxjs";
+import {forkJoin} from "rxjs";
 
 interface Project {
   id: number;
@@ -58,7 +58,6 @@ export class TaskComponent {
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private formBuilder: FormBuilder,
-    private router: Router,
     private authService: AuthService,
   ) {
     this.loadData(this.projectId);
@@ -118,27 +117,6 @@ export class TaskComponent {
       },
       error: (error) => {
         this.error = error.error?.message || 'An error occurred during task edition';
-      }
-    });
-  }
-
-  getTask() {
-    this.projectService.getTask(this.projectId, this.taskId).subscribe({
-      next: (response) => {
-        this.task = response;
-
-        // @ts-ignore
-        this.editTaskForm.patchValue({
-          name: this.getLastTaskHistory(response)?.name,
-          description: this.getLastTaskHistory(response)?.description,
-          status: this.getLastTaskHistory(response)?.status,
-          priority: this.getLastTaskHistory(response)?.priority,
-          dueDate: this.getLastTaskHistory(response)?.dueDate,
-          endedAt: this.getLastTaskHistory(response)?.endedAt || ''
-        });
-      },
-      error: (error) => {
-        console.error(error);
       }
     });
   }
