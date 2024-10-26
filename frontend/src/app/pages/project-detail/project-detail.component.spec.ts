@@ -156,6 +156,21 @@ describe('ProjectDetailComponent', () => {
     expect(lastHistory).toEqual(task.taskHistories[task.taskHistories.length - 1]);
   });
 
+  it('should getProjectTasks with the correct projectId and update tasks', () => {
+    const projectId = 1;
+    const mockTasks = [
+      { id: 1, name: 'Task 1', status: 'To Do' },
+      { id: 2, name: 'Task 2', status: 'In Progress' },
+    ];
+
+    projectServiceMock.getProjectTasks.mockReturnValue(of(mockTasks));
+
+    component.getProjectTasks(projectId);
+
+    expect(projectServiceMock.getProjectTasks).toHaveBeenCalledWith(projectId);
+    expect(component.tasks).toEqual(mockTasks);
+  });
+
   it('should get project tasks on task creation', () => {
     const projectId = 1;
 
@@ -169,6 +184,24 @@ describe('ProjectDetailComponent', () => {
 
     const lastHistory = component.getLastTaskHistory(task);
     expect(lastHistory).toBeNull();
+  });
+
+  it('should sort by role, then by userId', () => {
+    const users = [
+      { value: { role: 'ADMIN', userId: 2 } },
+      { value: { role: 'MEMBER', userId: 3 } },
+      { value: { role: 'ADMIN', userId: 1 } },
+      { value: { role: 'MEMBER', userId: 4 } }
+    ];
+
+    const sortedUsers = users.sort(component.sortByRoleAndId);
+
+    expect(sortedUsers).toEqual([
+      { value: { role: 'ADMIN', userId: 1 } },
+      { value: { role: 'ADMIN', userId: 2 } },
+      { value: { role: 'MEMBER', userId: 3 } },
+      { value: { role: 'MEMBER', userId: 4 } }
+    ]);
   });
 
   it('should be admin user', () => {
