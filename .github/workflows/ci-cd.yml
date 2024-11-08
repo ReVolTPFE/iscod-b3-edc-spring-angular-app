@@ -26,8 +26,8 @@ jobs:
 
       - name: Run backend tests
         run: |
-					sleep 20
-					docker exec edc-backend-spring ./mvnw test
+          sleep 20
+          docker exec edc-backend-spring ./mvnw test
 
       - name: Shut down Docker Compose
         run: docker compose -f docker-compose.yml down
