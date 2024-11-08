@@ -21,13 +21,13 @@ C'est pourquoi les mots de passe d'utilisateurs en base de données ne sont pas 
 ## Ajout de la base de données et de ses données pré-remplies
 - Aller sur http://localhost:8000 et se connecter à l'interface phpMyAdmin (user = root, password = root).
 - Créer une base de données s'appelant "edc" et ayant un encodage "utf8mb4_general_ci" si celle-ci n'existe pas déjà.
- ![phpMyAdmin](image-2.png)
+ ![phpMyAdmin](./readme-img/img1.png)
 
 - En étant sur la page de la base de données, en haut de la page se situe un menu de navigation. Cliquer sur "Importer". Voir image ci-dessous.
- ![phpMyAdmin](image-4.png)
+ ![phpMyAdmin](./readme-img/img2.png)
 
 - Un bloc sur la page demande à ajouter le fichier que vous souhaitez importer. Choisir le fichier ```edc.sql``` présent à la racin du projet Git cloné.
- ![phpMyAdmin](image-5.png)
+ ![phpMyAdmin](./readme-img/img3.png)
 
 - Descendez ensuite tout en bas de la page et cliquez sur le bouton "Importer".
 
