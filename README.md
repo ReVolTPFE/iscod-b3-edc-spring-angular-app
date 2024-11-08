@@ -54,3 +54,13 @@ C'est pourquoi les mots de passe d'utilisateurs en base de données ne sont pas 
 - Mariana (Tech Lead) : Mariana est l'administrateur des 2 projets, c'est donc elle qui a accès à tous les privilèges et qui peut tout éditer.
 	- email : mariana@codesolutions.com
 	- password : azerty
+
+## Code coverage (attendu 60% pour instructions et branches)
+
+- Frontend (fichier disponible dans ```./readme-img/code-coverage-frontend.jpg```) :
+	- Instructions : 88.8 %
+	- Branches : 69.23%
+<br>
+
+![coverage frontend](./readme-img/code-coverage-frontend.jpg)
+<br>
