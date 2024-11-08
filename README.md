@@ -55,6 +55,9 @@ C'est pourquoi les mots de passe d'utilisateurs en base de données ne sont pas 
 	- email : mariana@codesolutions.com
 	- password : azerty
 
+## Schéma de la base de données (fichier disponible dans ```./readme-img/db-schema.jpg```)
+![db schema](./readme-img/db-schema.jpg)
+
 ## Code coverage (attendu 60% pour instructions et branches)
 
 - Frontend (fichier disponible dans ```./readme-img/code-coverage-frontend.jpg```) :
