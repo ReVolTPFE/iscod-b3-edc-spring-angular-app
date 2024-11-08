@@ -19,16 +19,13 @@ jobs:
         run: docker compose -f docker-compose.yml up --build -d
 
       - name: Verify Docker containers status
-        run: |
-          docker ps
-          sleep 15
-          docker ps
+        run: docker ps
 
       - name: Run frontend tests
-        run: docker compose exec edc-frontend-angular npm run test
+        run: docker exec edc-frontend-angular npm run test
 
       - name: Run backend tests
-        run: docker compose exec edc-backend-spring ./mvnw test
+        run: docker exec edc-backend-spring ./mvnw test
 
       - name: Shut down Docker Compose
         run: docker compose -f docker-compose.yml down
