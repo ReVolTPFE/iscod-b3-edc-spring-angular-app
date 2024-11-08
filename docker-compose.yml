@@ -6,6 +6,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     volumes:
       - ./db/.database:/var/lib/mysql
+      - ./edc.sql:/docker-entrypoint-initdb.d/edc.sql
   phpmyadmin:
     image: phpmyadmin:5.2.1-apache
     container_name: 'edc-db-interface-phpmyadmin'
