@@ -13,10 +13,23 @@ C'est pourquoi les mots de passe d'utilisateurs en base de données ne sont pas 
 
 ## Installation
 
-- Ouvrir un terminal de commande
+- Ouvrir un terminal de commande.
 - Lancer la commande ```git clone https://github.com/ReVolTPFE/iscod-b3-edc-spring-angular-app.git``` depuis le répertoire où vous souhaitez installer le projet.
 - Lancer la commande ```cd iscod-b3-edc-spring-angular-app``` pour entrer dans le projet.
 - Lancer la commande ```docker compose up --build```dans le terminal.
+
+## Ajout de la base de données et de ses données pré-remplies
+- Aller sur http://localhost:8000 et se connecter à l'interface phpMyAdmin (user = root, password = root).
+- Créer une base de données s'appelant "edc" et ayant un encodage "utf8mb4_general_ci" si celle-ci n'existe pas déjà.
+ ![phpMyAdmin](image-2.png)
+
+- En étant sur la page de la base de données, en haut de la page se situe un menu de navigation. Cliquer sur "Importer". Voir image ci-dessous.
+ ![phpMyAdmin](image-4.png)
+
+- Un bloc sur la page demande à ajouter le fichier que vous souhaitez importer. Choisir le fichier ```edc.sql``` présent à la racin du projet Git cloné.
+ ![phpMyAdmin](image-5.png)
+
+- Descendez ensuite tout en bas de la page et cliquez sur le bouton "Importer".
 
 ## Accès à l'application
 
@@ -24,3 +37,16 @@ C'est pourquoi les mots de passe d'utilisateurs en base de données ne sont pas 
 - Backend Spring Boot (API donc pas de web configuré) : http://localhost:8080
 - Frontend Angular : http://localhost:4200
 - Interface mail catcher (maildev) : http://localhost:8081
+
+## Utilisateurs du site (repris du cahier des charges)
+- John Doe (CEO) :
+	- email : john@codesolutions.com
+	- password : azerty
+
+- Nicolas (Product Owner) :
+	- email : nicolas@codesolutions.com
+	- password : azerty
+
+- Mariana (Tech Lead) : Mariana est l'administrateur des 2 projets, c'est donc elle qui a accès à tous les privilèges et qui peut tout éditer.
+	- email : mariana@codesolutions.com
+	- password : azerty
