@@ -18,14 +18,21 @@ jobs:
       - name: Build and start Docker Compose services
         run: docker compose -f docker-compose.yml up --build -d
 
-      - name: Run frontend tests
-        run: docker exec edc-frontend-angular npm run test
-
       - name: Verify Docker containers status
         run: docker ps
 
+      - name: Run frontend tests
+        run: docker exec edc-frontend-angular npm run test
+
+      - name: Get backend container logs
+        run: docker logs edc-backend-spring || echo "No logs available"
+
       - name: Run backend tests
         run: docker exec edc-backend-spring ./mvnw test
+
+      - name: Get backend container logs after tests
+        if: failure()
+        run: docker logs edc-backend-spring || echo "No logs available after backend tests"
 
       - name: Shut down Docker Compose
         run: docker compose -f docker-compose.yml down
