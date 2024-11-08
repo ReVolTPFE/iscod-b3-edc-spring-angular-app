@@ -62,7 +62,7 @@ describe('AddTaskComponent', () => {
   };
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeFalse();
   });
 
   it('should mark form as submitted on submit', () => {
