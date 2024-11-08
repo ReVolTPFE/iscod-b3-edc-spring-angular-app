@@ -5,6 +5,9 @@ WORKDIR /app
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 
+# Donner les permissions d'exécution à Maven
+RUN chmod +x mvnw
+
 # Télécharger les dépendances
 RUN ./mvnw dependency:go-offline
 
