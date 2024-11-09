@@ -26,7 +26,7 @@ public class EntityTest {
         task.addUser(user);
         listTasks.add(task);
 
-        assertEquals(email, user.getEmail());
+        assertEquals(password, user.getEmail());
         assertEquals(password, user.getPassword());
         assertEquals(username, user.getUsername());
         assertEquals(listTasks, user.getTasks());
