@@ -4,9 +4,11 @@ services:
     container_name: 'edc-db-mariadb'
     environment:
       - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=edc
+      - CHARACTER_SET_SERVER=utf8mb4
+      - COLLATION_SERVER=utf8mb4_general_ci
     volumes:
       - ./db/.database:/var/lib/mysql
-      - ./edc.sql:/docker-entrypoint-initdb.d/edc.sql
   phpmyadmin:
     image: phpmyadmin:5.2.1-apache
     container_name: 'edc-db-interface-phpmyadmin'
