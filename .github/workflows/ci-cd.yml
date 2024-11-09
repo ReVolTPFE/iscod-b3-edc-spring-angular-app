@@ -26,8 +26,9 @@ jobs:
 
       - name: Run backend tests
         run: |
-        ls -al
-        ./mvnw test
+          pwd
+          ls -al
+          ./mvnw test
 
       - name: Shut down Docker Compose
         run: docker compose -f docker-compose.yml down
