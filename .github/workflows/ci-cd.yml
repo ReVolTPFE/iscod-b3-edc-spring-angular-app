@@ -25,7 +25,10 @@ jobs:
         run: docker exec edc-frontend-angular npm run test
 
       - name: Run backend tests
-        run: ./mvnw test
+        run: |
+        pwd
+        ls -al
+        ./mvnw test
 
       - name: Shut down Docker Compose
         run: docker compose -f docker-compose.yml down
