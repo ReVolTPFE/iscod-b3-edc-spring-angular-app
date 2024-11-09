@@ -26,7 +26,6 @@ jobs:
 
       - name: Run backend tests
         run: |
-        pwd
         ls -al
         ./mvnw test
 
