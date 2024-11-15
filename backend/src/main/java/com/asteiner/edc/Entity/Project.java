@@ -3,6 +3,7 @@ package com.asteiner.edc.Entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "project")
@@ -24,7 +25,7 @@ public class Project
     private LocalDate startedAt;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private Set<UserProjectRole> userProjectRoles;
+    private Set<UserProjectRole> userProjectRoles = new HashSet<>();
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<Task> tasks;
