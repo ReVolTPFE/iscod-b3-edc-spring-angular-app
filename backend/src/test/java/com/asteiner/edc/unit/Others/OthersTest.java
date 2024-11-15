@@ -1,13 +1,13 @@
 package com.asteiner.edc.unit.Others;
 
-import com.asteiner.edc.Others.GetTaskDto;
-import com.asteiner.edc.Others.GetTaskHistoryDto;
-import com.asteiner.edc.Others.TaskDtoObject;
+import com.asteiner.edc.Others.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -82,5 +82,69 @@ public class OthersTest {
         assertEquals(priority, taskDtoObject.getPriority());
         assertEquals(dueDate, taskDtoObject.getDueDate());
         assertEquals(endedAt, taskDtoObject.getEndedAt());
+    }
+
+    @Test
+    void getUserWithProjectRoleDto() {
+        int userId = 1;
+        String username = "Username";
+        String email = "a@b.c";
+        String role = "ADMIN";
+
+        GetUserWithProjectRoleDto dto = new GetUserWithProjectRoleDto();
+        dto.setUserId(1);
+        dto.setUsername("Username");
+        dto.setEmail("a@b.c");
+        dto.setRole("ADMIN");
+
+        assertEquals(userId, dto.getUserId());
+        assertEquals(username, dto.getUsername());
+        assertEquals(email, dto.getEmail());
+        assertEquals(role, dto.getRole());
+    }
+
+    @Test
+    void getUserDto() {
+        int userId = 1;
+        String username = "Username";
+        String email = "a@b.c";
+
+        GetUserDto dto = new GetUserDto();
+        dto.setId(1);
+        dto.setUsername("Username");
+        dto.setEmail("a@b.c");
+
+        assertEquals(userId, dto.getId());
+        assertEquals(username, dto.getUsername());
+        assertEquals(email, dto.getEmail());
+    }
+
+    @Test
+    void getProjectDto() {
+        GetUserWithProjectRoleDto userDto = new GetUserWithProjectRoleDto();
+        userDto.setUserId(1);
+        userDto.setUsername("Username");
+        userDto.setEmail("a@b.c");
+        userDto.setRole("ADMIN");
+
+        int id = 1;
+        String name = "Project 1";
+        String description = "Project description";
+        LocalDate startedAt = LocalDate.now();
+        Set<GetUserWithProjectRoleDto> users = new HashSet<>();
+        users.add(userDto);
+
+        GetProjectDto dto = new GetProjectDto();
+        dto.setId(1);
+        dto.setName("Project 1");
+        dto.setDescription("Project description");
+        dto.setStartedAt(LocalDate.now());
+        dto.addUser(userDto);
+
+        assertEquals(id, dto.getId());
+        assertEquals(name, dto.getName());
+        assertEquals(description, dto.getDescription());
+        assertEquals(startedAt, dto.getStartedAt());
+        assertEquals(users, dto.getUsers());
     }
 }

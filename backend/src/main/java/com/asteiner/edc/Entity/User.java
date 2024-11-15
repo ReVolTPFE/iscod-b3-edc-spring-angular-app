@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Table(name = "user")
+@Table(name = "users") // Nécessité de renommer 'user' en 'users' car h2 pour la base de données de tests n'accepte pas la table 'user' qui doit être réservée.
 @Entity
 public class User
 {

@@ -100,10 +100,10 @@ INSERT INTO `task_history` (`due_date`, `ended_at`, `id`, `task_id`, `name`, `pr
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Structure de la table `users`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -111,10 +111,10 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `user`
+-- Déchargement des données de la table `users`
 --
 
-INSERT INTO `user` (`id`, `email`, `password`, `username`) VALUES
+INSERT INTO `users` (`id`, `email`, `password`, `username`) VALUES
 (19, 'john@codesolutions.com', 'azerty', 'John Doe'),
 (20, 'nicolas@codesolutions.com', 'azerty', 'Nicolas'),
 (21, 'mariana@codesolutions.com', 'azerty', 'Mariana');
@@ -190,9 +190,9 @@ ALTER TABLE `task_history`
   ADD KEY `FKer57q2libi1e9njpj6faoxd2i` (`task_id`);
 
 --
--- Index pour la table `user`
+-- Index pour la table `users`
 --
-ALTER TABLE `user`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `UKob8kqyqqgmefl0aco34akdtpe` (`email`);
 
@@ -234,9 +234,9 @@ ALTER TABLE `task_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
--- AUTO_INCREMENT pour la table `user`
+-- AUTO_INCREMENT pour la table `users`
 --
-ALTER TABLE `user`
+ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
@@ -266,13 +266,13 @@ ALTER TABLE `task_history`
 --
 ALTER TABLE `user_project_role`
   ADD CONSTRAINT `FK9l1icyrvwmfc2lr9fskttk85b` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`),
-  ADD CONSTRAINT `FKyaccfypicvgcice7sqocix13` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `FKyaccfypicvgcice7sqocix13` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Contraintes pour la table `user_task`
 --
 ALTER TABLE `user_task`
-  ADD CONSTRAINT `FKr2jik008e3jx6r1fal5e9aq1n` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FKr2jik008e3jx6r1fal5e9aq1n` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `FKvs34bjkmpbk2e54qlrol3ilt` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`);
 COMMIT;
 
