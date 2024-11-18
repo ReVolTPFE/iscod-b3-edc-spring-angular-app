@@ -45,8 +45,16 @@ C'est pourquoi les mots de passe d'utilisateurs en base de données ne sont pas 
 
 - Frontend (fichier disponible dans ```./readme-img/code-coverage-frontend.jpg```) :
 	- Instructions : 88.8 %
-	- Branches : 69.23%
+	- Branches : 69.23 %
 <br>
 
 ![coverage frontend](./readme-img/code-coverage-frontend.jpg)
+<br>
+
+- Backend (fichier disponible dans ```./readme-img/code-coverage-backend.jpg```) :
+	- Instructions : 68 %
+	- Branches : 75 %
+<br>
+
+![coverage backend](./readme-img/code-coverage-backend.jpg)
 <br>

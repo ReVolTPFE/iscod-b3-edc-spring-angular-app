@@ -35,6 +35,10 @@ public class TaskHistory
     @JoinColumn(name = "task_id", nullable = false)
     private Task task;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
