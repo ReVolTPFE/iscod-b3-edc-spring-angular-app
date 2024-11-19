@@ -46,7 +46,7 @@ export class ProjectComponent {
     const formData = {
       name: this.f['name'].value,
       description: this.f['description'].value,
-      startedAt: new Date().toISOString().split('T')[0] // format YYYY-MM-DD
+      startedAt: this.f['startedAt'].value // format YYYY-MM-DD
     };
 
     this.projectService.createProject(formData).subscribe({
