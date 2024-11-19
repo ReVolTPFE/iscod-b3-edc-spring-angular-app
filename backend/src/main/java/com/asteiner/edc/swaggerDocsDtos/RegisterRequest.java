@@ -2,7 +2,7 @@ package com.asteiner.edc.swaggerDocsDtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "Request body for user login")
+@Schema(description = "Request body for user register")
 public class RegisterRequest {
     @Schema(description = "Username of the user", example = "Username")
     private String username;

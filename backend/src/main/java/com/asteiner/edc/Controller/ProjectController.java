@@ -5,6 +5,14 @@ import com.asteiner.edc.Others.GetProjectDto;
 import com.asteiner.edc.Others.GetTaskDto;
 import com.asteiner.edc.Others.TaskDtoObject;
 import com.asteiner.edc.Service.ProjectService;
+import com.asteiner.edc.swaggerDocsDtos.CreateProjectRequest;
+import com.asteiner.edc.swaggerDocsDtos.CreateProjectTaskRequest;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,21 +26,63 @@ public class ProjectController
     @Autowired
     private ProjectService projectService;
 
+    @Operation(summary = "Create a new project for a user",
+            description = "Creates a new project associated to a user id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Project created successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+    })
     @PostMapping("/create")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void createProject(@RequestBody Project project, @PathVariable("userId") int userId) {
+    public void createProject(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Project details", required = true,
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateProjectRequest.class)))
+            @RequestBody Project project,
+
+            @Parameter(description = "Id of the user creating the project", example = "1", required = true)
+            @PathVariable("userId") int userId) {
         projectService.create(project, userId);
     }
 
+    @Operation(summary = "Create a new task in a project",
+            description = "Creates a new task associated to a project")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Task created successfully"),
+            @ApiResponse(responseCode = "404", description = "User or project not found", content = @Content)
+    })
     @PostMapping("/{projectId}/task/create")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void createTask(@RequestBody TaskDtoObject taskDtoObject, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId) {
+    public void createTask(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Task details", required = true,
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateProjectTaskRequest.class)))
+            @RequestBody TaskDtoObject taskDtoObject,
+
+            @Parameter(description = "Id of the user creating the task", example = "1", required = true)
+            @PathVariable("userId") int userId,
+
+            @Parameter(description = "Id of the project of the task", example = "1", required = true)
+            @PathVariable("projectId") int projectId) {
         projectService.createTask(userId, projectId, taskDtoObject);
     }
 
+    @Operation(summary = "Add a user in a project",
+            description = "Adds a new user to a project")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User added successfully"),
+            @ApiResponse(responseCode = "404", description = "User or project not found", content = @Content)
+    })
     @PostMapping("/{projectId}/addUser")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void addUserToProject(@RequestBody String email, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId) {
+    public void addUserToProject(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User to add email", required = true,
+                    content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "user@example.com")))
+            @RequestBody String email,
+
+            @Parameter(description = "Id of the user adding another user", example = "1", required = true)
+            @PathVariable("userId") int userId,
+
+            @Parameter(description = "Id of the project", example = "1", required = true)
+            @PathVariable("projectId") int projectId) {
         projectService.addUser(projectId, userId, email);
     }
 
