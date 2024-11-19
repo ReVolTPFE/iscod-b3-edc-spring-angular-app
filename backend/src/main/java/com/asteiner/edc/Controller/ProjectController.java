@@ -194,33 +194,230 @@ public class ProjectController
         projectService.editTask(userId, projectId, taskId, taskDtoObject);
     }
 
+    @Operation(summary = "Retrieve specific task",
+            description = "Retrieves the task specified by its id in parameters")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Task successfully retrieved", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(
+                            type = "object"),
+                            examples = @ExampleObject(value = """
+                                {
+                                    "id": 1,
+                                    "projectId": 1,
+                                    "taskHistories": [
+                                        {
+                                            "id": 1,
+                                            "taskId": 1,
+                                            "name": "Task1",
+                                            "description": "Description",
+                                            "status": "TODO",
+                                            "priority": "LOW",
+                                            "dueDate": "2024-11-29",
+                                            "endedAt": null
+                                        }
+                                    ],
+                                    "users": [
+                                        {
+                                            "username": "Username1",
+                                            "email": "user1@example.com",
+                                            "id": 1
+                                        }
+                                    ]
+                                }
+                    """))
+            }),
+            @ApiResponse(responseCode = "404", description = "User, project or task not found", content = @Content)
+    })
     @GetMapping("/{projectId}/task/{taskId}")
     @ResponseStatus(code = HttpStatus.OK)
-    public GetTaskDto getTask(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @PathVariable("taskId") int taskId) {
+    public GetTaskDto getTask(
+            @Parameter(description = "Id of the user", example = "1", required = true)
+            @PathVariable("userId") int userId,
+
+            @Parameter(description = "Id of the project", example = "1", required = true)
+            @PathVariable("projectId") int projectId,
+
+            @Parameter(description = "Id of the task", example = "1", required = true)
+            @PathVariable("taskId") int taskId) {
         return projectService.getTask(userId, projectId, taskId);
     }
 
+    @Operation(summary = "Retrieve all tasks",
+            description = "Retrieves the tasks from a project")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tasks successfully retrieved", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(
+                            type = "array"),
+                            examples = @ExampleObject(value = """
+                                [
+                                    {
+                                        "id": 1,
+                                        "projectId": 1,
+                                        "taskHistories": [
+                                            {
+                                                "id": 1,
+                                                "taskId": 1,
+                                                "name": "Task1",
+                                                "description": "Description",
+                                                "status": "TODO",
+                                                "priority": "LOW",
+                                                "dueDate": "2024-11-29",
+                                                "endedAt": null
+                                            }
+                                        ],
+                                        "users": [
+                                            {
+                                                "username": "Username1",
+                                                "email": "user1@example.com",
+                                                "id": 1
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": 2,
+                                        "projectId": 1,
+                                        "taskHistories": [
+                                            {
+                                                "id": 2,
+                                                "taskId": 2,
+                                                "name": "Task2",
+                                                "description": "Description",
+                                                "status": "TODO",
+                                                "priority": "LOW",
+                                                "dueDate": "2024-11-29",
+                                                "endedAt": null
+                                            }
+                                        ],
+                                        "users": [
+                                            {
+                                                "username": "Username1",
+                                                "email": "user1@example.com",
+                                                "id": 1
+                                            }
+                                        ]
+                                    }
+                                ]
+                    """))
+            }),
+            @ApiResponse(responseCode = "404", description = "User or project not found", content = @Content)
+    })
     @GetMapping("/{projectId}/task")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<GetTaskDto> getTasks(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId) {
+    public List<GetTaskDto> getTasks(
+            @Parameter(description = "Id of the user", example = "1", required = true)
+            @PathVariable("userId") int userId,
+
+            @Parameter(description = "Id of the project", example = "1", required = true)
+            @PathVariable("projectId") int projectId) {
         return projectService.getTasks(userId, projectId);
     }
 
+    @Operation(summary = "Change user role",
+            description = "Change a user role in a project")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User role edited successfully"),
+            @ApiResponse(responseCode = "404", description = "User or project not found", content = @Content)
+    })
     @PutMapping("/{projectId}/changeUserRole/{userToChangeRoleId}")
     @ResponseStatus(code = HttpStatus.OK)
-    public void changeUserRoleInProject(@RequestBody String newRole, @PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @PathVariable("userToChangeRoleId") int userToChangeRoleId) {
+    public void changeUserRoleInProject(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "New role for the user", required = true,
+                    content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "GUEST")))
+            @RequestBody String newRole,
+
+            @Parameter(description = "Id of the user", example = "1", required = true)
+            @PathVariable("userId") int userId,
+
+            @Parameter(description = "Id of the project", example = "1", required = true)
+            @PathVariable("projectId") int projectId,
+
+            @Parameter(description = "Id of the user to change role", example = "2", required = true)
+            @PathVariable("userToChangeRoleId") int userToChangeRoleId) {
         projectService.changeUserRole(projectId, userId, userToChangeRoleId, newRole);
     }
 
+    @Operation(summary = "Retrieve project",
+            description = "Retrieves the project data")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Project data successfully retrieved", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(
+                            type = "object"),
+                            examples = @ExampleObject(value = """
+                                {
+                                    "id": 1,
+                                    "name": "Project1",
+                                    "description": "Description",
+                                    "startedAt": "2024-11-19",
+                                    "users": [
+                                        {
+                                            "userId": 1,
+                                            "username": "User1",
+                                            "email": "user1@example.com",
+                                            "role": "ADMIN"
+                                        }
+                                    ]
+                                }
+                    """))
+            }),
+            @ApiResponse(responseCode = "404", description = "User or project not found", content = @Content)
+    })
     @GetMapping("/{projectId}")
     @ResponseStatus(code = HttpStatus.OK)
-    public GetProjectDto getProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId) {
+    public GetProjectDto getProject(
+            @Parameter(description = "Id of the user", example = "1", required = true)
+            @PathVariable("userId") int userId,
+
+            @Parameter(description = "Id of the project", example = "1", required = true)
+            @PathVariable("projectId") int projectId) {
         return projectService.getProject(userId, projectId);
     }
 
+    @Operation(summary = "Retrieve projects",
+            description = "Retrieves all projects data")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Projects data successfully retrieved", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(
+                            type = "array"),
+                            examples = @ExampleObject(value = """
+                                [
+                                    {
+                                        "id": 1,
+                                        "name": "Project1",
+                                        "description": "Description",
+                                        "startedAt": "2024-11-19",
+                                        "users": [
+                                            {
+                                                "userId": 1,
+                                                "username": "User1",
+                                                "email": "user1@example.com",
+                                                "role": "ADMIN"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": 2,
+                                        "name": "Project2",
+                                        "description": "Description",
+                                        "startedAt": "2024-11-19",
+                                        "users": [
+                                            {
+                                                "userId": 1,
+                                                "username": "User1",
+                                                "email": "user1@example.com",
+                                                "role": "ADMIN"
+                                            }
+                                        ]
+                                    }
+                                ]
+                    """))
+            }),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+    })
     @GetMapping("")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<GetProjectDto> getProjects(@PathVariable("userId") int userId) {
+    public List<GetProjectDto> getProjects(
+            @Parameter(description = "Id of the user", example = "1", required = true)
+            @PathVariable("userId") int userId) {
         return projectService.getProjects(userId);
     }
 }
